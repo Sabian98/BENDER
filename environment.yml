@@ -1,0 +1,21 @@
+# Environment used to run the analysis and figure scripts (versions as tested).
+# The simulations also need CALVADOS (https://github.com/KULL-Centre/CALVADOS) and OpenMpipi, installed from source
+# with pip, and LAMMPS for MPIPI-GG.
+name: bender
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy=2.5
+  - pandas=3.0
+  - scipy=1.18
+  - matplotlib=3.11
+  - mdtraj=1.11
+  - networkx=3.7
+  - openmm=8.6
+  - biopython
+  - pillow
+  - pytest
+  - pip
+  - pip:
+      - metapredict

@@ -1,0 +1,8 @@
+taxon,traj_id,label,protein,n_res,delta_nu,sasbdb_entry_plotted
+Human,Q9Y5P3,Q9Y5P3,Retinoic acid-induced protein 2 (303-465),167,-0.0104,SASDQ46
+Virus,P0C1C7,P0C1C7,Protein W,477,-0.0207,SASDLL9
+Other vertebrate,SASDT27,P08551,"Neurofilament light polypeptide (T445N; C-terminus, amino ac",110,-0.0089,SASDTT6
+Plant,Q9C7W1,Q9C7W1,Filaggrin-like protein,180,0.0031,SASDJS7
+Bacteria,B7UM99,B7UM99,Translocated intimin receptor Tir,173,-0.0004,SASDKH8
+Fungi,P39935,P39935,Eukaryotic initiation factor 4F subunit p150,251,-0.0211,SASDP88
+Protist,SASDRF8,P19597,Circumsporozoite protein,89,0.0189,SASDRF8

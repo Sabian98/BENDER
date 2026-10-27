@@ -1,0 +1,82 @@
+B2 mechanism test: residue-pair second virial coefficients of CALVADOS-2 and Mpipi-Recharged vs the per-sequence
+disagreement dnu = nu(Mpipi-Recharged) - nu(CALVADOS-2), 10282 BENDER sequences (2026-10-20)
+
+== Settings
+T 300 K, ionic strength 150 mM, kT 2.4943 kJ/mol. B2 = -2 pi int (exp(-u/kT) - 1) r^2 dr, nm^3; dB2 = B2(Mpipi-Recharged) - B2(CALVADOS-2), so dB2 < 0 means more attractive under Mpipi-Recharged.
+CALVADOS-2 (calvados 0.9.0): Ashbaugh-Hatch eps = 0.2 kcal/mol = 0.8368 kJ/mol, lambda and sigma arithmetic means, cutoff 2 nm (shifted); Debye-Hueckel eps_yu 1.7875 kJ/mol nm, kappa 1.2755 /nm, cutoff 4 nm (shifted); charges R, K +1, D, E -1, H 0.0307 (pH 7.5). Terminal charges are not residue-pair terms and are left out (CALVADOS-2 charges both termini, Mpipi-Recharged neither).
+Mpipi-Recharged (OpenMpipi 0.1.0): Wang-Frenkel (pair eps, sigma, mu; nu = 1; zero beyond 3 sigma) plus Yukawa A_ij exp(-kappa r)/r, kappa 1.2755 /nm, truncated without shift at 3.5 nm. The A table gives His an effective charge of about +0.51 (A_HH / A_KK = 0.259); Arg-acid A is 1.14 times Lys-acid A.
+Check against OpenMM (Reference platform, two beads): 6 pairs x 11 distances (0.45-3.6 nm) per force field, max |difference| 1.8e-08 kJ/mol (b2_openmm_check.csv). B2 integration: halving dr and starting at 0.03 nm changes B2 by at most 4.6e-12 nm^3.
+CALVADOS IDP/prepare.py sets neither eps_lj nor the cutoffs, so the package defaults above apply (assumes the calvados on the cluster has the defaults of the local install).
+Sequences: BENDER_BIO six groups; 4 X residues taken as Gly (as BENDER_BIO and both simulations).
+
+== Pair classes (pairs3 weights). mean dB2 = unweighted mean over the pairs of the class (nm^3); contribution = class term of the per-sequence mean dB2 per residue pair; var share = cov(class term, total) / var(total).
+class        pairs   B2 C2   B2 MR mean dB2                range (pair)  contrib var share contested     rest     diff rho dnu
+aro-aro          6  +0.016  -1.279   -1.295    -1.81 (WW) .. -0.86 (FF)  -0.0017     0.050   -0.0031  -0.0016  -0.0015   +0.41
+Arg-aro          3  +0.082  -1.738   -1.820    -2.44 (RW) .. -1.34 (FR)  -0.0116     0.216   -0.0380  -0.0096  -0.0284   +0.39
+Lys-aro          3  +0.230  +0.372   +0.142    +0.11 (FK) .. +0.16 (KY)  +0.0006    -0.004   +0.0002  +0.0006  -0.0005   -0.17
+His-aro          3  +0.139  -1.033   -1.172    -1.53 (HW) .. -0.96 (FH)  -0.0020     0.036   -0.0023  -0.0020  -0.0003   +0.25
+charge +/-       4  -1.887  -2.026   -0.139    -0.21 (DR) .. -0.07 (DK)  -0.0061     0.054   -0.0090  -0.0059  -0.0031   +0.17
+charge like      6  +2.258  +2.244   -0.014    -0.11 (EE) .. +0.17 (RR)  +0.0001     0.047   +0.0100  -0.0007  +0.0107   +0.01
+His-acid         2  +0.241  -0.865   -1.105    -1.11 (DH) .. -1.10 (EH)  -0.0068     0.096   -0.0048  -0.0070  +0.0021   +0.13
+His-base         3  +0.292  +1.022   +0.730    +0.70 (HK) .. +0.79 (HR)  +0.0070    -0.019   +0.0107  +0.0068  +0.0039   -0.09
+aliph-aliph     15  +0.217  +0.440   +0.223    +0.07 (AA) .. +0.41 (II)  +0.0071     0.060   +0.0050  +0.0072  -0.0022   +0.34
+GSP-GSP          6  +0.128  +0.214   +0.086    +0.06 (PP) .. +0.12 (SS)  +0.0073     0.039   +0.0079  +0.0072  +0.0007   +0.17
+other          159  +0.196  +0.212   +0.016    -1.05 (QW) .. +0.26 (CI)  +0.0310     0.426   +0.0226  +0.0316  -0.0090   +0.52
+total          210                   -0.051                              +0.0248     1.000   -0.0010  +0.0267  -0.0277   +0.62
+'other' (159 pairs, var share 0.426): pairs with one aromatic 0.084 (mean dB2 -0.109), with one aliphatic 0.195 (mean dB2 +0.109), the rest 0.148 (mean dB2 +0.009).
+Most negative dB2: RW -2.44, WW -1.81, RY -1.68, WY -1.64, FW -1.54, HW -1.53, FR -1.34, DH -1.11, EH -1.10, QW -1.05
+Most positive dB2: HR +0.79, HH +0.70, HK +0.70, II +0.41, IL +0.35, LL +0.34, IM +0.32, LM +0.28, CI +0.26, IT +0.25
+Largest var share (pairs): RY +0.113, RW +0.073, EH +0.051, DH +0.045, EE +0.030, FR +0.030, ER +0.026, DR +0.020, DE +0.019, QW +0.017
+
+== Per-sequence weights
+Primary: every residue pair with |i - j| >= 3 (pairs3). Sensitivity: composition products x_a x_b (comp) and |i - j|^-3/2 contact weights (contact). Pearson r of the per-sequence mean dB2, pairs3 vs comp 0.9991, pairs3 vs contact 0.9760.
+Mean dB2 per pair: +0.0248 nm^3 (contested class -0.0010, rest +0.0267); Pearson r with dnu 0.598, Spearman 0.617; inside the contested class r 0.675.
+
+== Regression of dnu (5-fold CV R2; folds and solver of paper_numbers_recharged.py, seed 0; mean +/- SD over 20 fold seeds; contested class n = 709, mean dnu -0.0373)
+   oof in class = out-of-fold predictions of the all-sequence model scored inside the class (R2 about the class mean);
+   refit in class = the same model refit on the class alone, 5-fold CV inside it.
+model                                                weights            terms  CV R2      20 seeds oof in class pred mean refit in class
+ln N only                                            pairs3                 1  0.014 0.015+/-0.000       -0.168   -0.0016          0.014
+dB2 + ln N                                           pairs3                 2  0.362 0.362+/-0.000        0.385   -0.0216          0.486
+B2_C2 + B2_MR + ln N                                 pairs3                 3  0.364 0.363+/-0.000        0.394   -0.0217          0.516
+dB2, B2_C2, ln N with squares and products           pairs3                 9  0.483 0.481+/-0.001        0.570   -0.0279          0.595
+class dB2 (11) + ln N                                pairs3                12  0.413 0.414+/-0.002        0.387   -0.0345          0.536
+class pair fractions (11, no B2) + ln N              pairs3                12  0.345 0.346+/-0.001        0.297   -0.0310          0.465
+composition linear (paper)                           composition           29  0.362 0.363+/-0.001        0.340   -0.0270          0.536
+composition squared and pairwise (paper)             composition           57  0.483 0.485+/-0.002        0.531   -0.0321          0.621
+composition linear + class dB2                       composition+pairs3    40  0.442 0.444+/-0.002        0.455   -0.0308          0.578
+composition squared and pairwise + class dB2         composition+pairs3    68  0.490 0.491+/-0.002        0.540   -0.0327          0.621
+composition squared and pairwise + 9-term B2 model   composition+pairs3    66  0.531 0.530+/-0.002        0.598   -0.0340          0.624
+dB2 + ln N                                           comp                   2  0.361 0.361+/-0.000        0.385   -0.0213          0.489
+B2_C2 + B2_MR + ln N                                 comp                   3  0.364 0.364+/-0.000        0.396   -0.0214          0.518
+dB2, B2_C2, ln N with squares and products           comp                   9  0.484 0.482+/-0.001        0.571   -0.0277          0.596
+class dB2 (11) + ln N                                comp                  12  0.416 0.417+/-0.001        0.394   -0.0347          0.535
+class pair fractions (11, no B2) + ln N              comp                  12  0.347 0.348+/-0.001        0.304   -0.0312          0.469
+dB2 + ln N                                           contact                2  0.311 0.311+/-0.000        0.319   -0.0191          0.426
+B2_C2 + B2_MR + ln N                                 contact                3  0.314 0.314+/-0.000        0.332   -0.0194          0.447
+dB2, B2_C2, ln N with squares and products           contact                9  0.409 0.408+/-0.001        0.479   -0.0250          0.512
+class dB2 (11) + ln N                                contact               12  0.345 0.349+/-0.002        0.338   -0.0318          0.475
+class pair fractions (11, no B2) + ln N              contact               12  0.285 0.288+/-0.002        0.256   -0.0281          0.397
+GBM composition (29 features)                        composition           29  0.562                      0.615   -0.0364          0.540
+GBM dB2, B2_C2, ln N                                 pairs3                 3  0.534                      0.646   -0.0328          0.571
+GBM class dB2 (11) + B2_C2 + ln N                    pairs3                13  0.573                      0.650   -0.0385          0.532
+Within one force field (pairs3 mean B2 vs composition, CV R2 of nu itself): CALVADOS-2: nu from B2 + ln N, squares and products 0.302; CALVADOS-2: nu from composition linear 0.371; Mpipi-Recharged: nu from B2 + ln N, squares and products 0.379; Mpipi-Recharged: nu from composition linear 0.477
+
+== Reading
+A single physical feature, the pair-weighted mean dB2, with ln N predicts 0.362 of var(dnu), as much as the 29-term composition model (0.362); with the CALVADOS-2 mean B2 and squares and products (9 terms) it reaches 0.483, the 57-term composition model being 0.483. The two overlap but are not the same: together they give 0.531 (shared 0.436, about 90% of either). Splitting dB2 into 11 chemical classes gives 0.413, against 0.345 for the same class pair fractions without B2 weights, so the B2 weights, not the grouping of pairs, carry the signal. Weighting pairs by ideal-chain contact probability lowers every B2 model (dB2 + ln N 0.311): the disagreement follows interactions between all residue pairs, not sequence-local ones. A gradient-boosting check gives the same picture (3 B2 features 0.534, 29 composition features 0.562). Mean pair B2 explains less of nu itself within either force field than composition does (see the within-force-field line above), so B2 describes the disagreement better than it describes nu. In the contested class the 9-term B2 model scores 0.570 out of fold (composition 0.531) and predicts a class mean of -0.028 (observed -0.037).
+
+== Caveats
+Sampling noise (block SE of both nu) is 10.1% of var(dnu), so the ceiling for any model is about 0.90; the best models here reach 0.53, leaving about 0.37 systematic but unexplained (sequence patterning, terminal charges, many-body effects are candidates).
+Part of the B2-composition overlap is built in: the mean dB2 is the pair fractions weighted by fixed dB2 values. The informative result is that fixed weights from the potentials, with 2-9 fitted coefficients, match fits of 29-57 coefficients, and beat the unweighted class fractions.
+This is still a regression on dnu; the parameter-swap simulation is the causal test. B2 is a dilute two-body measure of each pair potential and ignores chain connectivity and many-body screening.
+CALVADOS-2 terminal charges (+1 N, -1 C) are not in the residue-pair table; the termini control runs will show their share of dnu.
+
+== Draft mechanism paragraph (JCTC Results)
+To ask whether these differences are already written into the potentials, we computed the second virial coefficient $B_2$ of the non-bonded pair potential of each force field for all 210 residue pairs at 300 K and 150 mM. Arginine--aromatic and aromatic--aromatic pairs are close to ideal under CALVADOS-2 ($|B_2| \le 0.10$ nm$^3$) but strongly attractive under Mpipi-Recharged ($B_2$ from $-0.8$ to $-2.4$ nm$^3$), whereas lysine--aromatic and aliphatic pairs are more repulsive under Mpipi-Recharged, and histidine, nearly neutral in CALVADOS-2 at pH 7.5 but partially charged in Mpipi-Recharged, becomes attractive to acidic and repulsive to basic residues. Averaged over the residue pairs of each sequence, the difference $\Delta B_2$ predicts 36\% of the variance of $\Delta\nu$ under the same cross-validation, as much as the linear compositional model, and together with the CALVADOS-2 $B_2$ and their squares and products it predicts 48\% with 9 terms, as much as the 57-term compositional model; combined, the two reach 53\%, so that about 90\% of what either explains is shared. In the contested class the mean $\Delta B_2$ is lower than in the other sequences by 0.028 nm$^3$, all of it from the arginine--aromatic term, and the $B_2$ model predicts $\Delta\nu$ there slightly better than composition (out-of-fold $R^2 = 0.57$ against 0.53); the compositional dependence of the disagreement is therefore largely written into the pair potentials, above all into the arginine--aromatic and aromatic--aromatic attractions that Mpipi-Recharged strengthens.
+
+== Columns
+b2_pairs_300K_150mM.csv: B2_C2, B2_MR, dB2 (nm^3, full potential); *_short, short-range term only (AH or WF); q_C2, product of CALVADOS-2 charges; A_MR, Mpipi-Recharged Yukawa amplitude (kJ/mol nm); lambda_C2, sigma_C2, eps_MR (kJ/mol), sigma_MR (nm), mu_MR, pair parameters; mean_pair_weight, mean share of the pair among the pairs3 residue pairs of a sequence; mean_contrib, its mean term in the per-sequence mean dB2; var_share, cov(term, total) / var(total); mean_contrib_contested / _rest, by contested class.
+b2_features_per_sequence.csv: <weights>_dB2, _B2_C2, _B2_MR (mean per residue pair, nm^3); <weights>_dB2[class] (class term, sums to <weights>_dB2); <weights>_frac[class] (share of pairs in the class).
+b2_regression.csv: as the table above; contested_mean_pred / rest_mean_pred are out-of-fold means.
+
+Outputs: b2_pairs_300K_150mM.csv (210 pairs), b2_pair_classes.csv, b2_features_per_sequence.csv, b2_regression.csv, b2_openmm_check.csv, this file; each CSV has a .provenance.json.

@@ -1,0 +1,11 @@
+# outputs and local data
+output/
+work/
+trajectories/
+data/saxs/sasbdb/
+# Python and editors
+__pycache__/
+*.pyc
+.DS_Store
+._*
+.ipynb_checkpoints/

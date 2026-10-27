@@ -1,0 +1,45 @@
+pLDDT: 9,606 of 10,282 chains ({'AFDB v6': 9209, 'no model': 676, 'AFDB v2': 253, 'AFDB v1': 144})
+window 20: fully disordered 7,255 (75.5%); >= 90% of residues in IDRs 76.0%; >= 50% 83.7%; no IDR 13.7%
+window 10: fully disordered 6,908 (71.9%); >= 90% of residues in IDRs 72.5%; >= 50% 82.4%; no IDR 14.7%
+window 40: fully disordered 7,649 (79.6%); >= 90% of residues in IDRs 79.7%; >= 50% 83.2%; no IDR 14.2%
+residues inside IDRs (w20): 86.4%; residues with raw pLDDT < 0.7: 80.7%, > 0.8: 10.7%
+median per-chain mean pLDDT 0.612; chains with a folded run >= 30 residues: 19.9%
+
+by group (w20): n | fully disordered | >= 90% in IDRs | residues in IDRs | median mean pLDDT
+  Mammals    1361 |  76.3% |  76.8% |  88.1% | 0.627
+  Fungi      1537 |  68.8% |  70.5% |  84.9% | 0.610
+  Plants     2438 |  88.2% |  88.4% |  93.8% | 0.568
+  Protists   1015 |  76.3% |  76.6% |  87.4% | 0.588
+  Bacteria   2858 |  68.3% |  68.4% |  76.8% | 0.648
+  Viruses     397 |  71.5% |  71.5% |  84.8% | 0.648
+MobiDB vs AFDB latest, per-chain mean pLDDT (669 chains): r = 1.000, median |diff| 0.000
+
+f_domain: 10,282 chains ({'UniProt': 6476, 'UniSave': 3806})
+  > 0: 4.9%; > 0.5: 2.8%; > 0.9: 1.0%   (Human-IDRome IDRs: 22%, 5.1%, 3.4%)
+  feature types: {'Domain': 482, 'Coiled coil': 17}
+  Mammals   f_domain > 0:   6.0%  > 0.5:  3.5%
+  Fungi     f_domain > 0:   4.9%  > 0.5:  1.2%
+  Plants    f_domain > 0:   4.4%  > 0.5:  0.8%
+  Protists  f_domain > 0:   2.3%  > 0.5:  1.0%
+  Bacteria  f_domain > 0:   2.2%  > 0.5:  1.8%
+  Viruses   f_domain > 0:  14.6%  > 0.5: 13.7%
+  fully disordered by pLDDT and f_domain = 0: 7,076 of 9,606 (73.7%)
+
+robustness (w20): subset | n | r(nu) | mean dnu | SD | contested n, mean dnu | |dnu|>0.1 | rho(dnu, f_aro)
+  all                   10,282 | 0.803 | +0.0001 | 0.050 |  709, -0.037 |  3.9% | -0.37
+  fully disordered       7,255 | 0.756 | -0.0004 | 0.050 |  617, -0.034 |  4.3% | -0.40
+  not fully disordered   2,351 | 0.885 | +0.0024 | 0.047 |   61, -0.062 |  2.9% | -0.27
+  Spearman(mean pLDDT, dnu) = +0.06; Spearman(mean pLDDT, nu C2) = +0.32, (nu MR) = +0.31
+  Flory fits R2 < 0.99 (CALVADOS-2): 4.3% of fully disordered, 9.3% of the rest
+
+r(nu) by group: all chains | AF2 fully disordered (n) | AF2 not fully (n) | not-fully median f_K vs fully
+  Mammals   0.778 | 0.740 (1,038) | 0.835 (  323) | 0.065 vs 0.036
+  Fungi     0.633 | 0.619 (1,058) | 0.660 (  479) | 0.070 vs 0.047
+  Plants    0.771 | 0.762 (2,150) | 0.796 (  288) | 0.080 vs 0.031
+  Protists  0.790 | 0.789 (  774) | 0.794 (  241) | 0.109 vs 0.056
+  Bacteria  0.870 | 0.709 (1,951) | 0.952 (  907) | 0.099 vs 0.043
+  Viruses   0.826 | 0.857 (  284) | 0.862 (  113) | 0.100 vs 0.033
+
+metapredict V2: fully disordered 10,197 (99.2%)
+metapredict V3: fully disordered 10,268 (99.9%)
+  AF2 fully disordered among metapredict-V2 fully disordered: 76.1%

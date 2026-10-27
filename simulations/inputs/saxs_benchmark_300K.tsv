@@ -1,0 +1,78 @@
+traj_id	protein_name	taxon	subset	n_res	f_G	f_P	f_S	f_GP	gp_third	saxs_rg_nm	calvados2_rg_nm	recharged_rg_nm	mpipi_gg_rg_nm
+SASDQJ7	Human alpha-synuclein	Human	calvados2_training	140	0.1286	0.0357	0.0286	0.1643	mid	4.725	3.594	4.0475	4.041
+SASDQS8	Huntingtin	Human	no_uniprot_map	381	0.0735	0.1129	0.0394	0.1864	mid	4.15	5.6219	6.0328	5.9654
+SASD2B8	Tag + Intracellular region of Isoform 10 of Protocadherin-15	Other vertebrate	no_uniprot_map	374	0.0909	0.0695	0.115	0.1604	mid	6.855	6.5699	5.4806	7.4355
+SASDS74	Segment S(87-105) of the Neurofilament low intrinsically dis	Other vertebrate	no_uniprot_map	20	0.1	0.0	0.0	0.1	low	1.301	1.2999	1.3066	1.223
+SASDS93	Segment S(26-45) of the Neurofilament low intrinsically diso	Other vertebrate	no_uniprot_map	20	0.05	0.05	0.35	0.1	low	1.1	1.0951	1.1385	1.0998
+SASDSA3	Segment S(45-64) of the Neurofilament low intrinsically diso	Other vertebrate	no_uniprot_map	20	0.0	0.0	0.05	0.0	low	1.251	1.1959	1.2568	1.1917
+SASDSB3	Segment S(67-86) of the Neurofilament low intrinsically diso	Other vertebrate	no_uniprot_map	20	0.05	0.1	0.05	0.15	mid	1.248	1.2174	1.2368	1.2745
+SASDSF3	Segment S(106-128) of the Neurofilament low intrinsically di	Other vertebrate	no_uniprot_map	20	0.15	0.0	0.05	0.15	mid	1.256	1.2626	1.288	1.179
+SASDSH3	Segment S(129-146) of the Neurofilament low intrinsically di	Other vertebrate	no_uniprot_map	21	0.0476	0.0	0.0952	0.0476	low	1.302	1.2509	1.2429	1.1499
+SASDUS9	Elastin-like polypeptide	Synthetic	no_uniprot_map	159	0.3962	0.195	0.0189	0.5912	high	3.45	3.688	4.3443	4.402
+SASDUT9	Elastin-like polypeptide labeled with unnatural amino acid d	Synthetic	no_uniprot_map	157	0.4013	0.1911	0.0191	0.5924	high	3.47	3.7022	4.2568	4.1879
+SASD264	Alpha-synuclein V1 K102R	Unassigned	calvados2_training_overlap	140	0.1286	0.0357	0.0286	0.1643	mid	3.495	3.6238	4.0322	3.6984
+SASDTN2	V5 variant of the low complexity domain of hnRNPA1	Unassigned	calvados2_training_overlap	137	0.3869	0.0146	0.1752	0.4015	high	2.484	2.7956	2.3892	2.5183
+SASDVD8	Protein W (artificial PNT3 variant - low-kappa)	Virus	no_uniprot_map	133	0.0602	0.0902	0.1053	0.1504	mid	3.828	3.5342	3.1747	3.622
+B7UM99	Translocated intimin receptor Tir	Bacteria	independent	173	0.1329	0.0694	0.1156	0.2023	high	3.808	3.8005	3.9825	3.9022
+P08083	Colicin N Translocation domain	Bacteria	calvados2_training	98	0.2143	0.0408	0.1531	0.2551	high	2.76	2.6321	2.3639	2.4779
+P39935	Eukaryotic initiation factor 4F subunit p150	Fungi	independent	251	0.0757	0.0757	0.1116	0.1514	mid	5.15	4.5841	4.7647	4.6469
+Q9UTR8	NURS complex subunit red1	Fungi	independent	70	0.0857	0.0714	0.1857	0.1571	mid	2.53	2.4193	2.1936	2.5309
+O60828	Polyglutamine-binding protein 1	Human	independent	267	0.0562	0.0824	0.0824	0.1386	low	3.72	4.696	3.1585	4.6887
+O75056	Syndecan-3	Human	independent	343	0.0612	0.1399	0.0758	0.2012	high	6.495	5.6818	6.7181	7.0165
+P04637	Cellular tumor antigen p53	Human	independent	39	0.0	0.3333	0.1282	0.3333	high	2.22	1.6888	1.7692	1.98
+P10636	Isoform Tau-F of Microtubule-associated protein tau (C291A, 	Human	calvados2_training_overlap	130	0.1308	0.0615	0.0923	0.1923	mid	3.53	3.3739	3.906	3.5409
+P15516	Histatin-3, His3-(20-43)-peptide	Human	calvados2_training	24	0.0833	0.0	0.0833	0.0833	low	1.469	1.3304	1.3732	1.281
+P37231	Peroxisome proliferator-activated receptor gamma	Human	independent	137	0.0219	0.0949	0.1314	0.1168	low	3.507	3.6211	3.6097	3.4816
+Q15596	Nuclear receptor coactivator 2	Human	independent	150	0.06	0.06	0.1467	0.12	low	3.74	3.6337	4.13	4.1484
+Q4VC05	Isoform 2 of B-cell CLL/lymphoma 7 protein family member A	Human	independent	231	0.0649	0.0649	0.1558	0.1299	low	4.841	4.664	5.2328	4.6007
+Q86YC2	Partner and localizer of BRCA2 (L24A)	Human	independent	203	0.0493	0.069	0.0936	0.1182	low	5.23	4.0424	4.3197	4.4813
+Q9NP98	N-ter construct of FATZ-1 (alias myozenin-1 or calsarcin-2)	Human	independent	191	0.199	0.0366	0.1099	0.2356	high	3.45	3.6886	4.2469	4.1568
+Q9Y5P3	Retinoic acid-induced protein 2 (303-465)	Human	independent	167	0.0659	0.0719	0.1437	0.1377	low	4.15	3.9356	4.3091	4.2261
+SASD2E7	Microtubule-associated protein tau	Human	calvados2_training_overlap	95	0.1368	0.0421	0.0737	0.1789	mid	2.662	2.8335	3.191	3.0672
+SASDC62	Basic domain of telomeric repeat-binding factor 2	Human	independent	49	0.3265	0.0816	0.1429	0.4082	high	1.657	1.8281	2.0471	1.9824
+SASDEE2	Estrogen receptor	Human	independent	187	0.0963	0.1176	0.0802	0.2139	high	3.0	3.6577	3.7775	3.9224
+SASDJK6	Δ91 construct of FATZ-1 (alias myozenin-1 or calsarcin-2)	Human	independent	209	0.201	0.067	0.0861	0.2679	high	3.86	3.8465	4.2948	4.5135
+SASDK59	Mothers against decapentaplegic homolog 2 (linker)	Human	independent	90	0.0556	0.1778	0.1	0.2333	high	2.88	2.9027	3.1665	3.1686
+SASDKD9	Mothers against decapentaplegic homolog 4 (linker)	Human	independent	134	0.0896	0.0896	0.1567	0.1791	mid	3.68	3.3909	3.6066	3.503
+SASDL69	Syndecan-1	Human	independent	260	0.0962	0.0923	0.0962	0.1885	mid	5.33	5.1292	5.4389	5.7662
+SASDL79	Syndecan-2	Human	independent	154	0.039	0.0584	0.1364	0.0974	low	4.289	3.862	4.0451	3.8865
+SASDL99	Syndecan-4	Human	independent	163	0.0859	0.0798	0.1227	0.1656	mid	4.153	4.2289	4.2537	4.1971
+SASDLS4	Microtubule-associated protein tau, Tau35 fragment	Human	calvados2_training	255	0.102	0.0941	0.1333	0.1961	mid	4.64	5.1614	5.9191	5.5496
+SASDLT4	Microtubule-associated protein tau, 2N3R isoform	Human	calvados2_test_set	410	0.1098	0.1024	0.1	0.2122	high	6.33	6.1796	7.6691	7.0319
+SASDLU4	Microtubule-associated protein tau, 2N4R isoform	Human	calvados2_test_set	441	0.1111	0.0975	0.102	0.2086	high	6.72	6.3261	7.8853	8.2931
+SASDNV3	Elastin	Human	independent	698	0.2994	0.1232	0.0072	0.4226	high	6.62	8.3622	9.8288	9.4599
+SASDP79	Chromatin assembly factor 1 subunit A	Human	independent	144	0.0208	0.0278	0.0069	0.0486	low	4.08	4.0302	4.0155	3.7136
+SASDQY9	Beclin-1 (C18S, C21S, A103V, C137S, C140S)	Human	independent	156	0.0641	0.0577	0.1154	0.1218	low	4.054	3.5999	4.1516	3.9903
+SASDQZ9	Beclin-1	Human	independent	156	0.0641	0.0577	0.0897	0.1218	low	4.256	3.5875	4.0643	4.0691
+SASDSE5	Estrogen receptor (mutant S118A)	Human	independent	187	0.0963	0.1176	0.0749	0.2139	high	3.232	3.6639	3.7046	3.9942
+SASDSF5	Estrogen receptor (mutant S118D)	Human	independent	187	0.0963	0.1176	0.0749	0.2139	high	3.522	3.7009	3.658	4.2059
+SASDU67	DNA repair protein XRCC4	Human	independent	138	0.029	0.0507	0.1377	0.0797	low	3.416	3.3625	3.4537	3.6632
+SASDW34	Peroxisome proliferator-activated receptor alpha	Human	independent	100	0.1	0.1	0.2	0.2	mid	2.97	3.0725	3.3272	3.3238
+SASDXU7	N-myc proto-oncogene protein, residues 1-69	Human	independent	70	0.0714	0.1714	0.1143	0.2429	high	2.375	2.3553	2.2802	2.5956
+SASDXV7	N-myc proto-oncogene protein, residues 1-100	Human	independent	101	0.0792	0.1485	0.1188	0.2277	high	2.96	2.9557	2.8343	3.2306
+SASDYK2	Histatin-3	Human	calvados2_training_overlap	32	0.0625	0.0	0.0938	0.0625	low	1.485	1.5197	1.3289	1.4269
+SASDYY5	La-related protein 6	Human	independent	83	0.1446	0.0602	0.0843	0.2048	high	2.709	2.6446	2.755	2.7464
+P02687	Myelin basic protein	Other vertebrate	independent	169	0.1479	0.071	0.1065	0.2189	high	3.3	3.6901	3.6647	3.8755
+P15146	Microtubule-associated protein 2, isoform 3	Other vertebrate	independent	467	0.0835	0.0921	0.1242	0.1756	mid	7.29	6.5213	7.9504	8.1346
+Q60974	Nuclear receptor CoRepressor 1; Nuclear Receptor Interaction	Other vertebrate	calvados2_training	271	0.0627	0.0996	0.1697	0.1624	mid	4.72	4.7279	5.4116	5.8659
+Q9WTL8	Aryl hydrocarbon receptor nuclear translocator-like protein 	Other vertebrate	independent	98	0.1429	0.1122	0.1327	0.2551	high	2.77	2.9974	3.309	3.1892
+SASDQM8	Transient receptor potential cation channel subfamily V memb	Other vertebrate	independent	133	0.0752	0.1579	0.0752	0.2331	high	3.198	3.0633	3.0294	3.4463
+SASDQN8	Transient receptor potential cation channel subfamily V memb	Other vertebrate	independent	133	0.0752	0.1579	0.0752	0.2331	high	3.258	3.2363	3.3649	3.437
+SASDT27	Neurofilament light polypeptide (T445N; C-terminus, amino ac	Other vertebrate	independent	110	0.1	0.0273	0.0455	0.1273	low	4.38	4.2014	4.1258	3.8558
+F4IED2	NAC domain-containing protein 13	Plant	independent	114	0.0789	0.0614	0.0877	0.1404	low	3.6	3.4142	3.5913	3.6043
+Q9C7W1	Filaggrin-like protein	Plant	independent	180	0.1833	0.0111	0.1222	0.1944	mid	3.575	3.6324	3.669	3.3179
+Q9SQQ6	NAC domain-containing protein 46	Plant	calvados2_test_set	167	0.0778	0.0838	0.1257	0.1617	mid	3.53	3.6803	4.0257	3.9148
+SASDRF8	Circumsporozoite protein	Protist	independent	89	0.0674	0.0225	0.0674	0.0899	low	2.323	2.529	2.2859	2.4204
+O55777	Non-structural protein V (ΔC-terminal and Y111A, Y112A, Y113	Virus	independent	77	0.0649	0.0779	0.1039	0.1429	low	2.734	2.3302	1.999	2.5744
+P03255	Early E1A protein	Virus	independent	114	0.0439	0.1579	0.0702	0.2018	high	4.05	3.4548	3.6689	3.5932
+P0C1C6	Protein W	Virus	independent	133	0.0602	0.0902	0.1128	0.1504	mid	3.51	3.5107	3.0964	3.5497
+P0C1C7	Protein W	Virus	independent	477	0.0818	0.0608	0.0985	0.1426	low	7.096	6.2471	6.7092	6.4278
+Q997F2	Non-structural protein V	Virus	independent	137	0.0876	0.0584	0.1241	0.146	low	3.737	3.6329	3.4309	3.6702
+Q9IK91	Phosphoprotein	Virus	independent	412	0.0801	0.0631	0.0995	0.1432	low	6.17	6.7303	6.2525	7.0352
+SASDLJ9	Phosphoprotein	Virus	independent	62	0.0806	0.0968	0.0645	0.1774	mid	2.542	2.1935	2.4952	2.3776
+SASDLK9	Protein W	Virus	independent	475	0.0905	0.0842	0.0947	0.1747	mid	6.982	5.7681	5.838	8.5315
+SASDQQ9	Protein W	Virus	independent	427	0.0913	0.0867	0.0984	0.178	mid	6.434	6.407	6.3758	6.1998
+SASDSZ9	Nucleoprotein	Virus	independent	80	0.1375	0.05	0.2125	0.1875	mid	3.415	2.392	2.7221	2.4959
+SASDT42	Nucleoprotein (L223P, L227P, L230P)	Virus	independent	80	0.1375	0.0875	0.2125	0.225	high	2.722	2.4229	2.7381	2.652
+SASDUQ3	Protein W	Virus	independent	51	0.0784	0.0588	0.0392	0.1373	low	2.108	2.0148	2.0098	2.0866
+SASDUR3	Protein W	Virus	independent	51	0.0784	0.0588	0.0392	0.1373	low	2.148	1.9895	2.0992	2.0537

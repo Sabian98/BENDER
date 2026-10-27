@@ -1,0 +1,71 @@
+figure,traj_id,label,protein,taxon,sasbdb_entry_plotted
+S1,O60828,O60828,Polyglutamine-binding protein 1,Human,SASDED2
+S1,O75056,O75056,Syndecan-3,Human,SASDL89
+S1,SASDEE2,P03372,Estrogen receptor,Human,SASDEE2
+S1,SASDSE5,P03372,Estrogen receptor (mutant S118A),Human,SASDSE5
+S1,SASDSF5,P03372,Estrogen receptor (mutant S118D),Human,SASDSF5
+S1,SASDXU7,P04198,"N-myc proto-oncogene protein, residues 1-69",Human,SASDXU7
+S1,SASDXV7,P04198,"N-myc proto-oncogene protein, residues 1-100",Human,SASDXV7
+S1,P04637,P04637,Cellular tumor antigen p53,Human,SASDY42
+S2,P10636,P10636,"Isoform Tau-F of Microtubule-associated protein tau (C291A, ",Human,SASDV46
+S2,SASD2E7,P10636,Microtubule-associated protein tau,Human,SASD2E7
+S2,SASDLS4,P10636,"Microtubule-associated protein tau, Tau35 fragment",Human,SASDLS4
+S2,SASDLT4,P10636,"Microtubule-associated protein tau, 2N3R isoform",Human,SASDLT4
+S2,SASDLU4,P10636,"Microtubule-associated protein tau, 2N4R isoform",Human,SASDLU4
+S2,SASDNV3,P15502,Elastin,Human,SASDNV3
+S2,P15516,P15516,"Histatin-3, His3-(20-43)-peptide",Human,SASDHH8
+S2,SASDYK2,P15516,Histatin-3,Human,SASDYK2
+S3,SASDL69,P18827,Syndecan-1,Human,SASDL69
+S3,SASDL99,P31431,Syndecan-4,Human,SASDL99
+S3,SASDL79,P34741,Syndecan-2,Human,SASDL79
+S3,P37231,P37231,Peroxisome proliferator-activated receptor gamma,Human,SASDWZ3
+S3,SASDW34,Q07869,Peroxisome proliferator-activated receptor alpha,Human,SASDW34
+S3,SASDP79,Q13111,Chromatin assembly factor 1 subunit A,Human,SASDP79
+S3,SASDU67,Q13426,DNA repair protein XRCC4,Human,SASDU67
+S3,SASDKD9,Q13485,Mothers against decapentaplegic homolog 4 (linker),Human,SASDKD9
+S4,SASDQY9,Q14457,"Beclin-1 (C18S, C21S, A103V, C137S, C140S)",Human,SASDQY9
+S4,SASDQZ9,Q14457,Beclin-1,Human,SASDQZ9
+S4,SASDC62,Q15554,Basic domain of telomeric repeat-binding factor 2,Human,SASDC62
+S4,Q15596,Q15596,Nuclear receptor coactivator 2,Human,SASDK68
+S4,SASDK59,Q15796,Mothers against decapentaplegic homolog 2 (linker),Human,SASDK59
+S4,Q4VC05,Q4VC05,Isoform 2 of B-cell CLL/lymphoma 7 protein family member A,Human,SASDSW5
+S4,Q86YC2,Q86YC2,Partner and localizer of BRCA2 (L24A),Human,SASDVQ7
+S4,SASDYY5,Q9BRS8,La-related protein 6,Human,SASDYY5
+S5,Q9NP98,Q9NP98,N-ter construct of FATZ-1 (alias myozenin-1 or calsarcin-2),Human,SASDJJ6
+S5,SASDJK6,Q9NP98,Δ91 construct of FATZ-1 (alias myozenin-1 or calsarcin-2),Human,SASDJK6
+S5,SASDQS8,P42858,Huntingtin,Human,SASDQS8
+S5,SASD264,SASD264,Alpha-synuclein V1 K102R,Human,SASD274
+S5,SASDQJ7,SASDQJ7,Human alpha-synuclein,Human,SASDQJ7
+S5,SASDTN2,SASDTN2,V5 variant of the low complexity domain of hnRNPA1,Human,SASDTN2
+S5,O55777,O55777,"Non-structural protein V (ΔC-terminal and Y111A, Y112A, Y113",Virus,SASDQE7
+S5,P03255,P03255,Early E1A protein,Virus,SASDNN6
+S6,P0C1C6,P0C1C6,Protein W,Virus,SASDLF9
+S6,SASDLK9,P0C1C6,Protein W,Virus,SASDLK9
+S6,SASDQQ9,P0C1C6,Protein W,Virus,SASDQQ9
+S6,SASDUQ3,P0C1C6,Protein W,Virus,SASDUQ3
+S6,SASDUR3,P0C1C7,Protein W,Virus,SASDUR3
+S6,SASDSZ9,P0DTC9,Nucleoprotein,Virus,SASDT22
+S6,SASDT42,P0DTC9,"Nucleoprotein (L223P, L227P, L230P)",Virus,SASDT52
+S6,SASDLJ9,Q91MK1,Phosphoprotein,Virus,SASDLJ9
+S7,Q997F2,Q997F2,Non-structural protein V,Virus,SASDQF7
+S7,Q9IK91,Q9IK91,Phosphoprotein,Virus,SASDJB5
+S7,SASDVD8,P0C1C6,Protein W (artificial PNT3 variant - low-kappa),Virus,SASDVD8
+S7,SASDQM8,A0A1D5PXA5,Transient receptor potential cation channel subfamily V memb,Other vertebrate,SASDQM8
+S7,SASDQN8,A0A1D5PXA5,Transient receptor potential cation channel subfamily V memb,Other vertebrate,SASDQN8
+S7,P02687,P02687,Myelin basic protein,Other vertebrate,SASDDF6
+S7,P15146,P15146,"Microtubule-associated protein 2, isoform 3",Other vertebrate,SASDDB2
+S7,Q60974,Q60974,Nuclear receptor CoRepressor 1; Nuclear Receptor Interaction,Other vertebrate,SASDF34
+S8,Q9WTL8,Q9WTL8,Aryl hydrocarbon receptor nuclear translocator-like protein ,Other vertebrate,SASDF27
+S8,SASD2B8,Q99PJ1,Tag + Intracellular region of Isoform 10 of Protocadherin-15,Other vertebrate,SASD2C8
+S8,SASDS74,SASDS74,Segment S(87-105) of the Neurofilament low intrinsically dis,Other vertebrate,SASDS94
+S8,SASDS93,SASDS93,Segment S(26-45) of the Neurofilament low intrinsically diso,Other vertebrate,SASDSL3
+S8,SASDSA3,SASDSA3,Segment S(45-64) of the Neurofilament low intrinsically diso,Other vertebrate,SASDSQ3
+S8,SASDSB3,SASDSB3,Segment S(67-86) of the Neurofilament low intrinsically diso,Other vertebrate,SASDSZ3
+S8,SASDSF3,SASDSF3,Segment S(106-128) of the Neurofilament low intrinsically di,Other vertebrate,SASDSG4
+S8,SASDSH3,SASDSH3,Segment S(129-146) of the Neurofilament low intrinsically di,Other vertebrate,SASDST4
+S9,F4IED2,F4IED2,NAC domain-containing protein 13,Plant,SASDU37
+S9,Q9SQQ6,Q9SQQ6,NAC domain-containing protein 46,Plant,SASDVN9
+S9,P08083,P08083,Colicin N Translocation domain,Bacteria,SASDC53
+S9,Q9UTR8,Q9UTR8,NURS complex subunit red1,Fungi,SASDKD6
+S9,SASDUS9,SASDUS9,Elastin-like polypeptide,Synthetic,SASDUV9
+S9,SASDUT9,SASDUT9,Elastin-like polypeptide labeled with unnatural amino acid d,Synthetic,SASDUU9

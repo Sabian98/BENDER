@@ -1,0 +1,14 @@
+traj_id,calvados2_overlap,calvados2_entry,note
+P15516,training,Hst5 (Table 1),identical construct: histatin-3 residues 20-43 = histatin 5
+SASDLS4,training,Tau35 (Table 1),identical construct (255 aa)
+Q60974,training,CoRNID (Table 1),identical construct: N-CoR nuclear receptor interaction domain (271 aa)
+P08083,training,ColNT (Table 1),identical construct: colicin N translocation domain (98 aa)
+SASDQJ7,training,aSyn (Tables 1 and 3),identical construct: full-length alpha-synuclein (Rg and PRE training data)
+SASDYK2,training_overlap,Hst5 (Table 1),histatin-3 20-51 contains the entire Hst5 training sequence
+P10636,training_overlap,"K10, K32, K44 (Table 1)",tau K18 repeat domain lies within training tau fragments
+SASD2E7,training_overlap,"K32 (Table 1)",tau fragment (2N4R 297-391) lies within training tau fragment K32
+SASD264,training_overlap,aSyn (Tables 1 and 3),single point mutant (K102R) of training alpha-synuclein
+SASDTN2,training_overlap,A1 LCD variants (Table 1),sequence variant of the hnRNPA1 LCD scaffold used for 22 training variants
+SASDLT4,test_set,Tau 2N3R (Table 2),used by CALVADOS 2 authors as held-out test protein
+SASDLU4,test_set,Tau 2N4R (Table 2),used by CALVADOS 2 authors as held-out test protein
+Q9SQQ6,test_set,ANAC046 (Table 2),used by CALVADOS 2 authors as held-out test protein
