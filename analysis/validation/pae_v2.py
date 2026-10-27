@@ -66,7 +66,8 @@ def correlate(uid, xyz, pae):
     r, pval = stats.pearsonr(sd, p)
     return {'uniprot_id': uid, 'pearson_r': float(r), 'p_value': float(pval), 'n_residues': int(xyz.shape[1]),
             'n_pae': int(pae.shape[0]), 'n_frames': int(f), 'n_pairs': int(len(ii)),
-            'mean_sd': float(sd.mean()), 'mean_pae': float(p.mean()), 'status': 'ok'}
+            'mean_sd': float(sd.mean()), 'mean_pae': float(p.mean()),
+            'status': 'ok' if xyz.shape[1] == pae.shape[0] else 'length_mismatch'}   # never compare a truncated chain
 
 
 def run_one(args):

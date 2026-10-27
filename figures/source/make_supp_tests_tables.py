@@ -47,6 +47,7 @@ L = [r"""\begin{table}[H]
 for i, (k, klab) in enumerate(SWAPS):
     for j, (g, glab) in enumerate(SETS):
         idx = ref.index[ref.set == g]
+        idx = idx[sw[k].reindex(idx).notna().to_numpy()]      # chains with a swap run, so every column uses the same chains
         before = ref.loc[idx, "dnu_recharged_minus_c2"]
         after = sw[k].reindex(idx) - ref.loc[idx, "nu_calvados2"]
         shift = (sw[k].reindex(idx) - ref.loc[idx, "nu_recharged"]).dropna()

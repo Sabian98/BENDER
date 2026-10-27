@@ -236,7 +236,7 @@ def main():
             "recharged_ree_std_nm", "ratio_recharged_saxs", "abs_diff_recharged_nm",
             "nu_saxs", "nu_recharged", "delta_nu_recharged",
             "traj_rg_nm", "nu_traj", "delta_nu", "mpipi_rg_nm", "nu_mpipi", "delta_nu_mpipi", "closest_to_saxs"]
-    d = d.rename(columns={"nu_saxs_check": "nu_saxs"})
+    d = d.drop(columns=["nu_saxs"]).rename(columns={"nu_saxs_check": "nu_saxs"})   # one nu_saxs column (identical values)
     d[cols].to_csv(OUT, index=False)
 
     text = report(d)

@@ -52,7 +52,7 @@ def main():
     aug = fd.composition_model(b, d)
     fd.FEATS = feats
     res = d - base
-    cls = ((b.f_R + b.f_aro) >= (b.f_R + b.f_aro).quantile(0.9)) & (b.f_K < b.f_K.median())
+    cls = ((b.f_R + b.f_aro) > (b.f_R + b.f_aro).quantile(0.9)) & (b.f_K < b.f_K.median())
     print({c: round(b[c].corr(d, method="spearman"), 3) for c in CLASSES})
     print(f"CV R2 {r2(base):.3f} -> {r2(aug):.3f} (+{100 * (r2(aug) - r2(base)):.2f} points); residual vs omega_sticker "
           f"{res.corr(b.omega_sticker, method='spearman'):+.3f} overall, "

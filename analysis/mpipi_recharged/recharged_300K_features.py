@@ -339,7 +339,7 @@ def finalize():
                      'res_* per-residue graph features',
               'imports': {m.__name__: os.path.abspath(m.__file__) for m in
                           (bc, pae_v2, UP, MA, MG, R, sys.modules['graph_features'],
-                           sys.modules['traj_analysis_calvados_v2'], sys.modules['dynamic_pi_score'])},
+                           sys.modules['traj_analysis_calvados_v2'], sys.modules['pi_contacts'])},
               'n_rows': int(len(df)), 'n_ok': int((df['status'] == 'ok').sum())}
     params['pae_topup'] = f'{PAE_TOPUP} (rows whose PAE file was fetched after the run; column pae_source)'
     side = bc.write_provenance(FINAL, __file__, params, [RUNS, ROWS, BIO, NU_CSV, pae_v2.PAE_DIR] +

@@ -57,6 +57,7 @@ from calvados.inputmodels import SimulationInput  # noqa: E402
 from calvados.sequence import get_qs  # noqa: E402
 import OpenMpipi  # noqa: E402
 from OpenMpipi.system_building import calculate_debye_length, get_mpipi_system  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # analysis/
 import bender_paths as paths  # noqa: E402  (data and trajectory locations: paths.py at the repository root)
 
 DEFAULTS = dict(

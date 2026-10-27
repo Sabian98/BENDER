@@ -91,7 +91,7 @@ AA_MASS = {
     'L':113.159, 'Q':128.131, 'W':186.213, 'F':147.177, 'S':87.078,
     'H':137.141, 'N':114.104, 'P':97.116,  'C':103.144, 'I':113.159
 }
-CHARGED_POS = {3, 5}   # K, R
+CHARGED_POS = {3, 5, 16}   # K, R, H (+0.375 in Mpipi-GGv23; the SAXS benchmark runs left His uncharged)
 CHARGED_NEG = {7, 8}        # D, E
 
 # Check all residues are recognized
@@ -142,7 +142,7 @@ for i in range(1, N_res):
 
 # ── Output directory ───────────────────────────────────────────────────────
 outdir = args.outdir or os.path.join(
-    RUNS_DIR, input_name)
+    'runs', input_name)
 os.makedirs(outdir, exist_ok=True)
 print(f"\nOutput directory: {outdir}")
 

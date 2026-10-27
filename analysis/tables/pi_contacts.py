@@ -23,7 +23,9 @@ CATION_PI = set("R")
 @functools.lru_cache(maxsize=1)
 def _scores():
     b = pd.read_csv(paths.BIO, usecols=["sequence", "pi_pi_contact_freq", "delta_pi_pi_score"], low_memory=False)
-    return dict(zip(b["sequence"], b["pi_pi_contact_freq"] - b["delta_pi_pi_score"]))
+    s = dict(zip(b["sequence"], b["pi_pi_contact_freq"] - b["delta_pi_pi_score"]))
+    s.update({q.replace("X", "G"): v for q, v in s.items() if "X" in q})   # simulations model X as Gly
+    return s
 
 
 def _seq_pi_score(seq: str) -> float:

@@ -95,7 +95,7 @@ and MPIPI-Recharged properties from `analysis/mpipi_recharged/recharged_nu.py` a
 
 | Force field | Software | Reference |
 |---|---|---|
-| CALVADOS-2 | [CALVADOS](https://github.com/KULL-Centre/CALVADOS) 0.9 in OpenMM | Tesei and Lindorff-Larsen, *Open Res. Eur.* 2023 |
+| CALVADOS-2 | [CALVADOS](https://github.com/KULL-Centre/CALVADOS) in OpenMM (`prepare.py` predates release 0.9, which rejects its `runtime = 0` setting) | Tesei and Lindorff-Larsen, *Open Res. Eur.* 2023 |
 | MPIPI-Recharged | OpenMpipi in OpenMM | R. Tejedor et al., *ACS Cent. Sci.* 2025 |
 | MPIPI-GG | LAMMPS | Joseph et al., *Nat. Comput. Sci.* 2021; Lotthammer et al., *Nat. Methods* 2024 |
 
