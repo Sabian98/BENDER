@@ -15,6 +15,7 @@ figure and generated table of the paper.
 |---|---|
 | Per-sequence properties, force-field agreement, PAE agreement, disorder checks, SAXS benchmark | `data/` in this repository (see `data/README.md`) |
 | CALVADOS-2 trajectories (300 K) | [huggingface.co/datasets/taseef/BENDER](https://huggingface.co/datasets/taseef/BENDER) |
+| MPIPI-Recharged trajectories (300 K) | [huggingface.co/datasets/taseef/MPIPI-Recharged](https://huggingface.co/datasets/taseef/MPIPI-Recharged) |
 | MPIPI-GG trajectories and the per-sequence properties of both MPIPI models | [huggingface.co/datasets/taseef/BENDER-MPIPI](https://huggingface.co/datasets/taseef/BENDER-MPIPI) |
 
 Sequences are distributed with the data because many of the UniProt accessions have since become obsolete.
