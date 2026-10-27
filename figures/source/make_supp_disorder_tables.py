@@ -35,7 +35,7 @@ L.append(r"""\begin{table}[H]
     \toprule
      & & metapredict & \multicolumn{5}{c}{AlphaFold2 (Human-IDRome criterion)} & \\
     \cmidrule(lr){3-3}\cmidrule(lr){4-8}
-    Group & Chains & whole (\%) & models & whole (\%) & $\geq$90\% (\%) & residues (\%) & none (\%) & $f_\mathrm{dom} > 0.5$ (\%) \\
+    Taxon & Chains & whole (\%) & models & whole (\%) & $\geq$90\% (\%) & residues (\%) & none (\%) & $f_\mathrm{dom} > 0.5$ (\%) \\
     \midrule""")
 for g in fd.ORDER + ["All"]:
     s = d if g == "All" else d[d.group == g]
@@ -84,7 +84,7 @@ L.append(r"""    \bottomrule
 
 L.append(r"""\begin{table}[H]
   \centering
-  \caption{Agreement of $\nu$ between force fields by group, on all chains and split by the AlphaFold2 criterion,
+  \caption{Agreement of $\nu$ between force fields by taxon, on all chains and split by the AlphaFold2 criterion,
   with the median Lysine fraction of the two subsets.}
   \label{tab:disorder_groups_r}
   \small
@@ -92,7 +92,7 @@ L.append(r"""\begin{table}[H]
     \toprule
      & All & \multicolumn{2}{c}{One disordered region} & \multicolumn{2}{c}{Partly ordered} & median $f_K$ \\
     \cmidrule(lr){3-4}\cmidrule(lr){5-6}
-    Group & $r(\nu)$ & $n$ & $r(\nu)$ & $n$ & $r(\nu)$ & partly ordered / one region \\
+    Taxon & $r(\nu)$ & $n$ & $r(\nu)$ & $n$ & $r(\nu)$ & partly ordered / one region \\
     \midrule""")
 for g in fd.ORDER:
     ia = b.index[b.kingdom == g]

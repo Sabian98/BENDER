@@ -78,8 +78,8 @@ def main(out):
         fig.text((x0 + sa / 2 + 0.10) / W, (ya + sa + 0.05) / H, k, ha="center", va="bottom", fontsize=6.4,
                  color=INK)
         fig1.lineage_icon(overlay, k, x0 + sa / 2 - 0.28, ya + sa + 0.12, 0.15)
-    fd.label(fig, 0.02, ya + sa + 0.30, "a", "Each group in composition space", W, H)
-    fig.text((0.42 + 6 * 1.10 - 0.08) / W, (ya + sa + 0.32) / H, "Outline marks the contested region, with the share of each group inside",
+    fd.label(fig, 0.02, ya + sa + 0.30, "a", "Each taxon in composition space", W, H)
+    fig.text((0.42 + 6 * 1.10 - 0.08) / W, (ya + sa + 0.32) / H, "Outline marks the contested region, with the share of each taxon inside",
              ha="right", va="bottom", fontsize=5.4, color=fd.RECHARGED_DARK)
 
     # (b) contested class by group (share; mean dnu raw and adjusted) ------------------------
@@ -118,7 +118,7 @@ def main(out):
     axd.scatter([-0.085], [-0.95], s=9, facecolor="white", edgecolor=INK, lw=0.6, clip_on=False)
     axd.text(-0.077, -0.95, "Adjusted", fontsize=5.4, va="center", color=INK)
     fd.row_labels(fig, overlay, axs, W, H, 0.68, 0.82)
-    fd.label(fig, 0.02, top2, "b", "Contested class by group", W, H)
+    fd.label(fig, 0.02, top2, "b", "Contested class by taxon", W, H)
 
     # (c) large disagreements by group ----------------------------------------------------------
     big = (d.abs() > 0.1).to_numpy()

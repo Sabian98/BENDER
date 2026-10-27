@@ -95,7 +95,7 @@ def main(out):
         fig.text((x0 + sa / 2 + 0.10) / W, (ya + sa + 0.05) / H, f"{k} ({int(s.sum()):,})", ha="center",
                  va="bottom", fontsize=6.2, color=INK)
         fig1.lineage_icon(overlay, k, x0 + 0.08, ya + sa + 0.12, 0.15)
-    fd.label(fig, 0.02, ya + sa + 0.30, "a", f"{NUTXT} against chain length, by group", W, H)
+    fd.label(fig, 0.02, ya + sa + 0.30, "a", f"{NUTXT} against chain length, by taxon", W, H)
     xk = 3.30
     for txt, col in (("CALVADOS-2", fd.CALVADOS_DARK), ("MPIPI-Recharged", fd.RECHARGED_DARK),
                      ("Dashed line shows all sequences (CALVADOS-2)", MUTED)):
@@ -128,8 +128,8 @@ def main(out):
     axb.tick_params(axis="y", length=0)
     fd.clean(axb, left=False)
     fig.text(1.10 / W, (y2 + h + 0.03) / H, "Length", fontsize=5.6, color=MUTED, va="bottom")
-    fig.text(1.52 / W, (y2 + h + 0.03) / H, "+ group (dark)", fontsize=5.6, color=INK, va="bottom")
-    fd.label(fig, 0.02, top2, "b", "Length, then group", W, H)
+    fig.text(1.52 / W, (y2 + h + 0.03) / H, "+ taxon (dark)", fontsize=5.6, color=INK, va="bottom")
+    fd.label(fig, 0.02, top2, "b", "Length, then taxon", W, H)
 
     # (c) group medians at matched length ----------------------------------------------------
     for j, (v, col, dark, name) in enumerate(((nu_c, fd.CALVADOS, fd.CALVADOS_DARK, "CALVADOS-2"),
@@ -156,11 +156,11 @@ def main(out):
         if j:
             ax.set_yticklabels([])
         else:
-            ax.set_ylabel(f"Group median {NUTXT}", fontsize=6)
+            ax.set_ylabel(f"Taxon median {NUTXT}", fontsize=6)
         ax.set_xlabel("$N$ (residues)", fontsize=6)
         ax.set_title(name, fontsize=6.2, color=dark, pad=2)
         fd.clean(ax)
-    fd.label(fig, 3.62, top2, "c", "Groups at matched length", W, H)
+    fd.label(fig, 3.62, top2, "c", "Taxa at matched length", W, H)
 
     out = Path(out).expanduser()
     kw = dict(bbox_inches="tight", pad_inches=0.03)

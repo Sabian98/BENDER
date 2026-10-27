@@ -297,7 +297,7 @@ def main(out):
     axl.set_xticklabels(["−0.2", "0", "0.2"])
     axl.set_xlabel(f"Δ{NUTXT}, mean and 95% limits")
     row_labels(fig, overlay, axr, W, H, 2.78, 2.92)
-    label(fig, 2.30, top1, "b", "Agreement by group", W, H)
+    label(fig, 2.30, top1, "b", "Agreement by taxon", W, H)
 
     # (c) dnu vs aromatic fraction, colored by lysine ---------------------
     ax = fig.add_axes([5.22 / W, y1 / H, 1.70 / W, h / H])
