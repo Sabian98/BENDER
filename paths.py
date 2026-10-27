@@ -6,7 +6,7 @@ with an environment variable.
   BENDER_DATA     per-sequence tables shipped in this repository (default: ./data)
   BENDER_TRAJ     trajectories downloaded from Hugging Face, needed only to recompute the tables
                   (default: ./trajectories), laid out as
-                    calvados2/300K/<group>/<UniProt ID>/            CALVADOS-2 (top.pdb, <ID>.dcd)
+                    calvados2/300K/<taxon>/<UniProt ID>/            CALVADOS-2 (top.pdb, <ID>.dcd)
                     mpipi_recharged/300K/<UniProt ID>/              MPIPI-Recharged (top.pdb, <ID>.dcd)
                     mpipi_gg/300K/<UniProt ID>/                     MPIPI-GG (traj.xtc)
                     controls/{calvados2,recharged}/<set>/300K/<ID>/ control and swap runs
@@ -42,7 +42,7 @@ SAXS = DATA / "saxs"                                          # SAXS benchmark (
 CONTROLS = DATA / "controls"                                  # hnRNPA1 variants, termini controls, swaps
 DISORDER = DATA / "disorder_check"                            # metapredict, pLDDT and domain checks
 TAXONOMY = DATA / "taxonomy" / "ncbi_taxonomy_cache.json"     # NCBI lineages of every organism
-LINEAGES = DATA / "taxonomy" / "BENDER_300K_lineages.csv"     # group and run folder of every sequence
+LINEAGES = DATA / "taxonomy" / "BENDER_300K_lineages.csv"     # taxon and run folder of every sequence
 SEQUENCES = DATA / "sequences"                                # all 10,282 sequences (FASTA and TSV)
 
 # trajectories

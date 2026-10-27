@@ -22,8 +22,8 @@ each 137 residues including the N-terminal GS left after tag cleavage, taken fro
 measured SAXS Rg and apparent ν for the 20 variants that have them. CALVADOS-2 was parameterized partly on variants of
 this domain, so this comparison tests MPIPI-Recharged but cannot validate CALVADOS-2.
 
-**Termini and histidine controls.** `termini_control_300K.fasta` holds 300 BENDER sequences, 50 per group (25 from the
-top decile of |Δν| within the group and 25 drawn at random from the rest, none longer than 400 residues; seed
+**Termini and histidine controls.** `termini_control_300K.fasta` holds 300 BENDER sequences, 50 per taxon (25 from the
+top decile of |Δν| within the taxon and 25 drawn at random from the rest, none longer than 400 residues; seed
 20261020). The `termini` set removes the terminal charges, which MPIPI-Recharged does not have. The `termini_his` set
 also lowers the pH to 6.0, where the CALVADOS-2 histidine charge (+0.5) matches the effective charge of about +0.51 in
 the MPIPI-Recharged Yukawa table (at pH 7.5 it is +0.03).

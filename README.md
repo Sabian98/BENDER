@@ -3,7 +3,7 @@
 Code and per-sequence data for **"Conformational Ensembles of Disordered Proteins Across the Tree of Life"**
 (T. Rahman, submitted to the *Journal of Chemical Theory and Computation*).
 
-BENDER holds coarse-grained ensembles of 10,282 fully disordered proteins from six groups of life (mammals, fungi,
+BENDER holds coarse-grained ensembles of 10,282 fully disordered proteins from six taxa (mammals, fungi,
 plants, protists, bacteria and viruses), simulated with CALVADOS-2 and MPIPI-Recharged, with a 957-sequence subset
 also simulated with MPIPI-GG. This repository contains the simulation inputs and run scripts, the analysis code that
 turns trajectories into per-sequence properties, the per-sequence tables themselves and the scripts that draw every
@@ -57,7 +57,7 @@ python make_fig1_overview.py
 | Fig. 1, BENDER from one protein to the dataset | `make_fig1_overview.py` |
 | Fig. 2, cross-force-field disagreement | `make_fig_disagreement.py` |
 | Fig. 3, residue-pair B2 mechanism | `make_fig_b2_mechanism.py` |
-| Fig. 4, groups of life | `make_fig_lineages.py` |
+| Fig. 4, taxa | `make_fig_lineages.py` |
 | Fig. 5, parameter swaps and hnRNPA1 variants | `make_fig_tests.py` |
 | Fig. 6, chain length | `make_fig_length.py` |
 | SI, taxonomic composition | `make_supp_species_sunburst.py` |
