@@ -71,7 +71,7 @@ L.append(r"""\begin{table}[H]
     Chains & $n$ & $r(\nu)$ & $\langle\Delta\nu\rangle$ & $n$ & $\langle\Delta\nu\rangle$ & $|\Delta\nu| > 0.1$ & Aromatic & hydropathy \\
     \midrule""")
 for name, idx in (("All", b.index), ("AlphaFold2, one region", have.index[have.full]),
-                  ("AlphaFold2, partly ordered", have.index[~have.full])):
+                  ("AlphaFold2, at least partly folded", have.index[~have.full])):
     x, y, dd, c = b.loc[idx, "nu"], mr.loc[idx, "nu"], dnu.loc[idx], cls.loc[idx]
     L.append(f"    {name} & {len(idx):,} & {np.corrcoef(x, y)[0, 1]:.3f} & ${dd.mean():+.4f}$ & {int(c.sum())} & "
              f"${dd[c].mean():+.3f}$ & {pct((dd.abs() > 0.1).mean())}\\% & "
@@ -90,9 +90,9 @@ L.append(r"""\begin{table}[H]
   \small
   \begin{tabular}{lrrrrrr}
     \toprule
-     & All & \multicolumn{2}{c}{One disordered region} & \multicolumn{2}{c}{Partly ordered} & median $f_K$ \\
+     & All & \multicolumn{2}{c}{One disordered region} & \multicolumn{2}{c}{At least partly folded} & median $f_K$ \\
     \cmidrule(lr){3-4}\cmidrule(lr){5-6}
-    Taxon & $r(\nu)$ & $n$ & $r(\nu)$ & $n$ & $r(\nu)$ & partly ordered / one region \\
+    Taxon & $r(\nu)$ & $n$ & $r(\nu)$ & $n$ & $r(\nu)$ & partly folded / one region \\
     \midrule""")
 for g in fd.ORDER:
     ia = b.index[b.kingdom == g]

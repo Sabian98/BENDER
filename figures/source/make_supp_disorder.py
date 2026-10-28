@@ -86,8 +86,8 @@ def main(out):
         ax.axvline(x, color=P.MUTED, lw=0.6, ls=(0, (1, 1.5)))
     ax.set_xlabel("Mean pLDDT", fontsize=6.2)
     ax.set_ylabel("Chains", fontsize=6.2)
-    ax.text(0.03, 0.97, "Whole chain IDR", transform=ax.transAxes, fontsize=5.4, color=CAT_COL[0], va="top")
-    ax.text(0.03, 0.88, "Other", transform=ax.transAxes, fontsize=5.4, color=P.MUTED, va="top")
+    ax.text(0.03, 0.97, "One disordered region", transform=ax.transAxes, fontsize=5.4, color=CAT_COL[0], va="top")
+    ax.text(0.03, 0.88, "At least partly folded", transform=ax.transAxes, fontsize=5.4, color=P.MUTED, va="top")
     fd.clean(ax)
     fd.label(fig, 2.30, top, "b", "AlphaFold2 confidence", W, H)
 
@@ -96,7 +96,7 @@ def main(out):
     dnu = (mr["nu"] - b["nu"]).loc[have.index]
     ra = (b["f_R"] + b["f_aro"]).loc[have.index]
     edges = np.quantile(ra, np.linspace(0, 1, 11))
-    for sub, col, ls, lab in ((full, CAT_COL[0], "-", "Whole chain IDR"), (~full, P.MUTED, (0, (3, 2)), "Other")):
+    for sub, col, ls, lab in ((full, CAT_COL[0], "-", "One disordered region"), (~full, P.MUTED, (0, (3, 2)), "At least partly folded")):
         xs, ms = [], []
         for lo, hi in zip(edges[:-1], edges[1:]):
             sel = sub & (ra >= lo) & (ra <= hi)
