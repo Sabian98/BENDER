@@ -1,6 +1,6 @@
 # BENDER
 
-Code and per-sequence data for **"Conformational Ensembles of Disordered Proteins Across the Tree of Life"**
+Code and per-sequence data for **"Arginine–Aromatic Attraction Divides Coarse-Grained IDP Force Fields Across the Tree of Life"**
 (T. Rahman, submitted to the *Journal of Chemical Theory and Computation*).
 
 BENDER holds coarse-grained ensembles of 10,282 fully disordered proteins from six taxa (mammals, fungi,
@@ -117,5 +117,5 @@ Hugging Face.
 
 ## Citation
 
-T. Rahman, Conformational Ensembles of Disordered Proteins Across the Tree of Life, submitted to *J. Chem. Theory
+T. Rahman, Arginine–Aromatic Attraction Divides Coarse-Grained IDP Force Fields Across the Tree of Life, submitted to *J. Chem. Theory
 Comput.* (2026).
