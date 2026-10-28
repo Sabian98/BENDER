@@ -58,7 +58,7 @@ cls = (ra > ra.quantile(0.9)) & (b["f_K"] < b["f_K"].median())
 L.append(r"""\begin{table}[H]
   \centering
   \caption{The comparison between force fields on all chains and on the chains that do or do not pass the AlphaFold2
-  criterion of disorder, with the contested class as defined on all 10,282 chains. Here $r(\nu)$ is the Pearson
+  criterion of disorder, with the \textit{contested} class as defined on all 10,282 chains. Here $r(\nu)$ is the Pearson
   correlation of $\nu$ between CALVADOS-2 and MPIPI-Recharged, $\Delta\nu$ is MPIPI-Recharged minus CALVADOS-2,
   and $\rho$ is the Spearman correlation of $\Delta\nu$ with Aromatic fraction and with mean hydropathy.}
   \label{tab:disorder_robust}
@@ -66,7 +66,7 @@ L.append(r"""\begin{table}[H]
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{lrrrrrrrr}
     \toprule
-     & & & & \multicolumn{2}{c}{Contested class} & & \multicolumn{2}{c}{$\rho(\Delta\nu, \cdot)$} \\
+     & & & & \multicolumn{2}{c}{\textit{Contested} class} & & \multicolumn{2}{c}{$\rho(\Delta\nu, \cdot)$} \\
     \cmidrule(lr){5-6}\cmidrule(lr){8-9}
     Chains & $n$ & $r(\nu)$ & $\langle\Delta\nu\rangle$ & $n$ & $\langle\Delta\nu\rangle$ & $|\Delta\nu| > 0.1$ & Aromatic & hydropathy \\
     \midrule""")

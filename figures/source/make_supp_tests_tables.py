@@ -9,7 +9,7 @@ import bender_paths as paths  # noqa: E402  (data and output locations: paths.py
 
 HERE = Path(__file__).resolve().parent
 DATA, INPUTS = paths.CONTROLS, paths.INPUTS
-SETS = [("contested", "Contested"), ("aliph_rich", "Aliphatic-rich"), ("his_rich", "His-rich"), ("control", "Control")]
+SETS = [("contested", r"\textit{Contested}"), ("aliph_rich", "Aliphatic-rich"), ("his_rich", "His-rich"), ("control", "Control")]
 SWAPS = [("aro", "Arg/Aromatic pairs"), ("aliph", "Aliphatic pairs"), ("his", "His charge"), ("all", "All three")]
 
 

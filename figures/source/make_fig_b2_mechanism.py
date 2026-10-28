@@ -49,7 +49,7 @@ NUTXT = r"$\mathsf{\nu}$"
 NOISE_SHARE = 0.101          # paper_numbers_recharged.py: share of var(dnu) from block standard errors
 
 plt.rcParams.update({
-    "font.family": "Arial", "mathtext.fontset": "custom", "mathtext.rm": "Arial", "mathtext.it": "Arial",
+    "font.family": "Arial", "mathtext.fontset": "custom", "mathtext.rm": "Arial", "mathtext.it": "Arial", "mathtext.cal": "Arial:italic",
     "mathtext.bf": "Arial:bold", "mathtext.sf": "DejaVu Sans", "pdf.fonttype": 42, "ps.fonttype": 42,
     "axes.linewidth": 0.6, "axes.edgecolor": MUTED, "xtick.color": INK, "ytick.color": INK,
     "xtick.major.width": 0.5, "ytick.major.width": 0.5, "xtick.major.size": 2.0, "ytick.major.size": 2.0,
@@ -104,7 +104,7 @@ def scatter(ax, feat):
     hb = ax.hexbin(x, y, gridsize=55, cmap=DENSITY, norm=LogNorm(), mincnt=1, linewidths=0, zorder=1)
     c = feat["contested_class"].astype(bool).to_numpy()
     ax.scatter(x[c], y[c], s=3.5, color=RECHARGED, edgecolor="white", linewidth=0.25, zorder=3,
-               label=f"Contested class (n = {c.sum():,})")
+               label=rf"$\mathcal{{Contested}}$ class (n = {c.sum():,})")
     ax.axhline(0, color=RULE, lw=0.6, zorder=0)
     ax.axvline(0, color=RULE, lw=0.6, zorder=0)
     r = stats.pearsonr(x, y)[0]

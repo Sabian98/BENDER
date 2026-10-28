@@ -76,6 +76,8 @@ plt.rcParams.update({
     "mathtext.rm": "Arial",
     "mathtext.it": "Arial",
     "mathtext.bf": "Arial:bold",
+    "mathtext.cal": "Arial:italic",          # \mathcal{} = italic Arial, for the term contested
+    "mathtext.bfit": "Arial:italic:bold",    # \mathbfit{} = bold italic Arial, in bold panel titles
     "mathtext.sf": "DejaVu Sans",
     "pdf.fonttype": 42,
     "ps.fonttype": 42,
@@ -371,7 +373,7 @@ def main(out):
     x90, kmed = np.quantile(ra, 0.9), np.median(fk)
     ax.add_patch(plt.Rectangle((x90, 0), xe[1] - x90, kmed, facecolor="none", edgecolor=INK, lw=0.8,
                                ls=(0, (2.5, 1.5)), zorder=5))
-    ax.text(x90 + 0.008, kmed + 0.008, "Contested", fontsize=5.6, color=INK, va="bottom", ha="left")
+    ax.text(x90 + 0.008, kmed + 0.008, r"$\mathcal{Contested}$", fontsize=5.6, color=INK, va="bottom", ha="left")
     ring(ax, ra[b.index.get_loc(EXAMPLE)], fk[b.index.get_loc(EXAMPLE)], text="")
     ax.set_xlim(*xe)
     ax.set_ylim(*ye)

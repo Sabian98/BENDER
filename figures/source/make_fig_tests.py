@@ -32,7 +32,7 @@ import bender_paths as paths  # noqa: E402  (data and output locations: paths.py
 
 DATA = paths.CONTROLS
 INPUTS = paths.INPUTS
-SETS = [("contested", "Contested"), ("aliph_rich", "Aliphatic-rich"), ("his_rich", "His-rich"), ("control", "Control")]
+SETS = [("contested", r"$\mathcal{Contested}$"), ("aliph_rich", "Aliphatic-rich"), ("his_rich", "His-rich"), ("control", "Control")]
 SWAPS = [("aro", "Arg/Aromatic pairs", "o", P.ARO, P.INK), ("aliph", "Aliphatic pairs", "s", P.RULE, P.DARK),
          ("his", "His charge", "D", "white", P.DARK), ("all", "All three", "^", P.DARK, P.DARK)]
 RESIDUES = [("R", "Arg"), ("FWY", "Aromatic"), ("K", "Lys"), ("DE", "Asp + Glu")]
@@ -108,7 +108,7 @@ def main(out):
     ax.set_xlabel(r"$\Delta$" + fd.NUTXT + ", unswapped", fontsize=6.2)
     ax.set_ylabel(r"$\Delta$" + fd.NUTXT + ", Arg/Aromatic swap", fontsize=6.2)
     fd.clean(ax)
-    fd.label(fig, 2.80, top, "b", "Contested chains", W, H)
+    fd.label(fig, 2.80, top, "b", r"$\mathbfit{Contested}$ chains", W, H)
 
     # (c) Bremer variants against SAXS ------------------------------------------------------------------
     br = pd.read_csv(INPUTS / "bremer2022_a1lcd_300K.tsv", sep="\t").set_index("run_name").dropna(subset=["saxs_Rg_A"])

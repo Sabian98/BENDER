@@ -79,7 +79,7 @@ def main(out):
                  color=INK)
         fig1.lineage_icon(overlay, k, x0 + sa / 2 - 0.28, ya + sa + 0.12, 0.15)
     fd.label(fig, 0.02, ya + sa + 0.30, "a", "Each taxon in composition space", W, H)
-    fig.text((0.42 + 6 * 1.10 - 0.08) / W, (ya + sa + 0.32) / H, "Outline marks the contested region, with the share of each taxon inside",
+    fig.text((0.42 + 6 * 1.10 - 0.08) / W, (ya + sa + 0.32) / H, r"Outline marks the $\mathcal{contested}$ region, with the share of each taxon inside",
              ha="right", va="bottom", fontsize=5.4, color=fd.RECHARGED_DARK)
 
     # (b) contested class by group (share; mean dnu raw and adjusted) ------------------------
@@ -118,7 +118,7 @@ def main(out):
     axd.scatter([-0.085], [-0.95], s=9, facecolor="white", edgecolor=INK, lw=0.6, clip_on=False)
     axd.text(-0.077, -0.95, "Adjusted", fontsize=5.4, va="center", color=INK)
     fd.row_labels(fig, overlay, axs, W, H, 0.68, 0.82)
-    fd.label(fig, 0.02, top2, "b", "Contested class by taxon", W, H)
+    fd.label(fig, 0.02, top2, "b", r"$\mathbfit{Contested}$ class by taxon", W, H)
 
     # (c) large disagreements by group ----------------------------------------------------------
     big = (d.abs() > 0.1).to_numpy()
@@ -183,7 +183,7 @@ def main(out):
     ar.set_xticks([1, 2, 3, 4, 5])
     ar.set_xlabel("$R_g$ over the trajectory (nm)")
     fd.clean(ar, left=False)
-    fd.label(fig, 4.80, top2, "d", f"Contested Protist {EX}", W, H)
+    fd.label(fig, 4.80, top2, "d", rf"$\mathbfit{{Contested}}$ Protist {EX}", W, H)
 
     out = Path(out).expanduser()
     kw = dict(bbox_inches="tight", pad_inches=0.03)
