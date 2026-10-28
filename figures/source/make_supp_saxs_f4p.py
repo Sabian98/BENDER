@@ -66,13 +66,14 @@ def _text(self, x, y, s, *args, **kwargs):
 matplotlib.axes.Axes.text = _text
 
 # ...write their legend separators without colons or semicolons ("A: x; y" -> "A (x, y)") and the force-field family
-# as MPIPI, as in the text
+# as MPIPI, as in the text, and the deviation from SAXS as δν (Δν is MPIPI-Recharged minus CALVADOS-2)
 _set_text = matplotlib.text.Text.set_text
 
 
 def _set_text_plain(self, s):
     if isinstance(s, str):
         s = s.replace("Mpipi", "MPIPI")
+        s = s.replace(r"\Delta\mathsf{\nu}", r"\delta\mathsf{\nu}")  # simulation minus SAXS is δν, as in the SI
         s = re.sub(r"^(MPIPI-GG|MPIPI-Recharged|CALVADOS-2): (.+)$", r"\1 (\2)", s.replace("; ", ", "))
     return _set_text(self, s)
 
