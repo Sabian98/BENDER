@@ -183,7 +183,7 @@ def main(out):
     ar.set_xticks([1, 2, 3, 4, 5])
     ar.set_xlabel("$R_g$ over the trajectory (nm)")
     fd.clean(ar, left=False)
-    fd.label(fig, 4.80, top2, "d", f"Contested protist {EX}", W, H)
+    fd.label(fig, 4.80, top2, "d", f"Contested Protist {EX}", W, H)
 
     out = Path(out).expanduser()
     kw = dict(bbox_inches="tight", pad_inches=0.03)

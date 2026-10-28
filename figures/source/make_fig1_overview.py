@@ -3,7 +3,7 @@
 (a) The dataset on a schematic tree of life: sequences per group (one bar; every sequence has both force fields),
     split into the three most frequent organisms of the group (named above the bar) and the rest; organisms; and
     the MPIPI-GG subset as a thin bar below.
-(b) Worked example, N0AZA6 (bacteria, 74 residues): its sequence colored by the chemistry the paper turns on
+(b) Worked example, N0AZA6 (Bacteria, 74 residues): its sequence colored by the chemistry the paper turns on
     (arginine, aromatic, lysine, acidic), and eight production-half conformers from each force field on one scale.
 (c) Its contact maps: Calpha-Calpha contact frequency (< 0.8 nm), CALVADOS-2 above the diagonal and MPIPI-Recharged
     below.
@@ -197,7 +197,7 @@ def panel_example(ax_seq, ax_c2, ax_mr, ex):
     for aa, name, x in keys:
         ax_seq.add_patch(Rectangle((x, 1.25), 0.8, 0.55, facecolor=RES_COL[aa], edgecolor="none", clip_on=False))
         ax_seq.text(x + 1.1, 1.52, name, fontsize=5.2, va="center", color=MUTED, clip_on=False)
-    ax_seq.text(0.0, 2.55, f"{EXAMPLE}, bacteria, {n} residues", fontsize=6.0, ha="left", va="center",
+    ax_seq.text(0.0, 2.55, f"{EXAMPLE}, Bacteria, {n} residues", fontsize=6.0, ha="left", va="center",
                 clip_on=False)
     lim = max(np.abs(ex["c2_conf"]).max(), np.abs(ex["mr_conf"]).max()) * 1.05
     for ax, key, col, dark, name in ((ax_c2, "c2", C2, C2D, "CALVADOS-2"), (ax_mr, "mr", MR, MRD, "MPIPI-Recharged")):
