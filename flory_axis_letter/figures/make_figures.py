@@ -141,10 +141,10 @@ def fcr_min_and_cross(g, col):
     b = pd.cut(g[col], BINS)
     m = g.groupby(b, observed=True)[['FCR', 'f_K', 'f_R']].mean(); n = g.groupby(b, observed=True).size(); m = m[n >= 20]
     mid = np.array([i.mid for i in m.index])
-    fmin = m.FCR.idxmin().mid
+    fmin, fval = m.FCR.idxmin().mid, m.FCR.min()
     diff = (m.f_K - m.f_R).values; idx = np.where((diff[:-1] < 0) & (diff[1:] >= 0))[0]
     cross = mid[idx[0]] + 0.01 if len(idx) else np.nan
-    return fmin, cross
+    return fmin, fval, cross
 
 
 def load(bio_path):
@@ -194,10 +194,10 @@ def fig2(d, out):
     for k in TAXA:
         g = d[d.kingdom == k]
         for col, ffn, ls, _ in FF:
-            fmin, cross = fcr_min_and_cross(g, col)
+            fmin, fval, cross = fcr_min_and_cross(g, col)
             n_m, n_lo, n_hi = boot_hinge(g, col, 'aN', seed=1)
             s_m, s_lo, s_hi = boot_hinge(g, col, 'SCD', seed=2)
-            rows.append(dict(taxon=k, ff=ffn, fcr_min=fmin, ncpr_onset=n_m, ncpr_lo=n_lo, ncpr_hi=n_hi,
+            rows.append(dict(taxon=k, ff=ffn, fcr_min=fmin, fcr_min_value=fval, ncpr_onset=n_m, ncpr_lo=n_lo, ncpr_hi=n_hi,
                              scd_onset=s_m, scd_lo=s_lo, scd_hi=s_hi, lys_over_arg=cross))
     R = pd.DataFrame(rows); R.to_csv(f'{out}/fig2a_stage_markers.csv', index=False)
     keys = [('fcr_min', None, None), ('ncpr_onset', 'ncpr_lo', 'ncpr_hi'), ('scd_onset', 'scd_lo', 'scd_hi')]

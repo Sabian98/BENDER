@@ -73,9 +73,9 @@ def main(bio, gg, saxs, meta, go, figdir, out):
 
     # S2 stage markers
     m = pd.read_csv(f'{figdir}/fig2a_stage_markers.csv')
-    rows = [[r.taxon, r.ff, f(r.fcr_min, 2), f'{r.ncpr_onset:.3f} ({r.ncpr_lo:.3f} to {r.ncpr_hi:.3f})',
+    rows = [[r.taxon, r.ff, f'{f(r.fcr_min, 2)} ({f(r.fcr_min_value, 3)})', f'{r.ncpr_onset:.3f} ({r.ncpr_lo:.3f} to {r.ncpr_hi:.3f})',
              f'{r.scd_onset:.3f} ({r.scd_lo:.3f} to {r.scd_hi:.3f})', f(r.lys_over_arg, 2)] for r in m.itertuples()]
-    tex_table(f'{out}/tab_stages.tex', 'Stage markers along $\\nu$ for each taxon and force field. Onsets are medians of 200 bootstrap hinge fits with 95\\% intervals in parentheses. The FCR minimum and the crossing of Lysine over Arginine are the centers of the binned values.',
+    tex_table(f'{out}/tab_stages.tex', 'Stage markers along $\\nu$ for each taxon and force field. Onsets are medians of 200 bootstrap hinge fits with 95\\% intervals in parentheses. The FCR minimum and the crossing of Lysine over Arginine are the centers of the binned values, with the mean FCR at the minimum in parentheses.',
               'tab:stages', ['Taxon', 'Force field', 'FCR minimum', '$|$NCPR$|$ onset', 'SCD onset', 'Lys over Arg'], rows, 'llcccc')
 
     # S3 curve agreement
