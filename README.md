@@ -39,6 +39,7 @@ analysis/             trajectories to per-sequence properties
   tables/               assembly of the per-sequence tables, NCBI taxonomy check
   tests/                reference checks on two bundled trajectories
 figures/source/       one script per figure or generated table
+flory_axis_letter/    code of the Flory-axis letter (see its README)
 ```
 
 ## Reproducing the figures
@@ -74,6 +75,12 @@ Run from this repository, every figure above is pixel-identical to the one in th
 need the experimental SAXS curves, which are not redistributed here. Download them from
 [SASBDB](https://www.sasbdb.org) as `<SASBDB code>.dat` (codes in `data/saxs/traj_vs_saxs_rg.csv`) into
 `data/saxs/sasbdb/`, or point `BENDER_SASBDB` at them.
+
+## Flory-axis letter
+
+`flory_axis_letter/` holds the code of a second paper built on BENDER, "A Shared Flory Axis Orders Charge in
+Disordered Proteins Across the Tree of Life" (T. Rahman and V. N. Uversky). It runs from `data/` with
+`bash flory_axis_letter/run_all.sh`; see `flory_axis_letter/README.md`.
 
 ## Recomputing the tables from trajectories
 

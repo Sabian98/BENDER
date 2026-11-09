@@ -12,6 +12,8 @@ dependencies:
   - matplotlib=3.11
   - mdtraj=1.11
   - networkx=3.7
+  - scikit-learn=1.9    # Flory-axis letter
+  - statsmodels=0.15    # Flory-axis letter
   - openmm=8.6
   - biopython
   - pillow
