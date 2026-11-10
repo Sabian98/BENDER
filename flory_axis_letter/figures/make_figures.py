@@ -386,25 +386,27 @@ def fig4(d, out, go_path):
     b.text(0.98, 0.5, 'Basic', transform=b.transAxes, fontsize=5.5, color=MUTED, rotation=90, va='center', ha='right')
     panel(b, 'b', 'Charge sign at the expanded end', x=-0.3)
 
-    lim = [0.525, 0.575]
-    c.plot(lim, lim, color=MUTED, lw=0.6, ls=':')
+    # rows of taxa as in panels b and e: filled = observed mean nu, open = mean predicted without a taxon label
     for fi, (col, ffn, ls, _) in enumerate(FF):
         p = cross_val_predict(HistGradientBoostingRegressor(max_iter=400, learning_rate=0.05, random_state=0),
                               d[DESC], d[col], cv=KFold(5, shuffle=True, random_state=0))
         dd = d.assign(p=p).groupby('kingdom').agg(act=(col, 'mean'), pred=('p', 'mean')).reindex(TAXA)
         dev_a = dd.act - dd.act.mean(); dev_r = dd.act - dd.pred
         r2 = 1 - np.sum(dev_r ** 2) / np.sum(dev_a ** 2)
-        for k in TAXA:
-            c.scatter(dd.loc[k, 'pred'], dd.loc[k, 'act'], s=28, marker='o' if fi == 0 else 's', color=FFC[col], edgecolors='white', lw=0.5)
-            if fi == 0:
-                off = {'Bacteria': (-30, -2), 'Protists': (7, 0), 'Plants': (6, -7)}.get(k, (5, -3))
-                c.annotate(k, (dd.loc[k, 'pred'], dd.loc[k, 'act']), xytext=off, textcoords='offset points',
-                           fontsize=5.5, color=INK)
-        c.text(0.03, 0.88 - 0.08 * fi, f'{"CALVADOS-2" if fi == 0 else "Recharged"} {100 * r2:.0f}%',
-               transform=c.transAxes, fontsize=5.5, va='top', ha='left', color=INK)
-    c.text(0.03, 0.97, 'Variance explained', transform=c.transAxes, fontsize=5.5, ha='left', va='top', color=MUTED)
-    c.set_xlim(lim); c.set_ylim(lim)
-    c.set_xlabel(r'Predicted mean $\nu$'); c.set_ylabel(r'Observed mean $\nu$')
+        mk = 'o' if fi == 0 else 's'
+        for yi, k in enumerate(TAXA):
+            y = yi + (-0.19 if fi == 0 else 0.19)
+            c.scatter([dd.loc[k, 'act']], [y], s=30, marker=mk, color=FFC[col], edgecolors='white', lw=0.4, zorder=2)
+            c.plot([dd.loc[k, 'act'], dd.loc[k, 'pred']], [y, y], color=FFC[col], lw=1.3, solid_capstyle='butt', zorder=1)
+            c.scatter([dd.loc[k, 'pred']], [y], s=44, marker=mk, facecolors='none', edgecolors=FFC[col], lw=1.1, zorder=3)
+        c.text(0.03, 0.10 - 0.07 * fi, f'{"CALVADOS-2" if fi == 0 else "Recharged"} {100 * r2:.0f}%',
+               transform=c.transAxes, fontsize=5.5, va='bottom', ha='left', color=INK)
+    c.text(0.03, 0.17, 'Variance explained', transform=c.transAxes, fontsize=5.5, ha='left', va='bottom', color=MUTED)
+    c.text(0.03, 0.98, 'Filled, observed\nOpen, predicted', transform=c.transAxes, fontsize=5.5, ha='left', va='top', color=MUTED)
+    c.set_yticks(range(6)); c.set_yticklabels(TAXA); c.set_ylim(5.6, -0.6)
+    c.set_xlim(0.522, 0.578); c.set_xlabel(r'Mean $\nu$ of each taxon')
+    c.legend(handles=[Patch(color=CAL, label='CALVADOS-2'), Patch(color=RCH, label='Mpipi-Recharged')],
+             frameon=False, fontsize=5.5, loc='upper center', bbox_to_anchor=(0.5, -0.24), ncol=2, handlelength=1)
     panel(c, 'd', 'Sequences set mean size', x=-0.3)
     G = pd.read_csv(go_path, sep='\t')
     terms = ['CC: nucleosome', 'MF: DNA binding', 'MF: structural constituent of chromatin', 'KW: DNA condensation',
@@ -441,9 +443,9 @@ def fig4(d, out, go_path):
                         arrowprops=dict(arrowstyle='-|>', color=FFC[col], lw=1.3, mutation_scale=7, shrinkA=0, shrinkB=0))
             e5.plot(rl_[k] * 1000, y, '|', color=FFC[col], ms=6, mew=1.3)
     e5.set_yticks(range(6)); e5.set_yticklabels(TAXA); e5.set_ylim(5.6, -0.6)
-    e5.set_xlabel(r'Mean taxon residual ($\nu \times 10^{3}$)')
+    e5.set_xlabel(r'Mean prediction error ($\nu \times 10^{3}$)')
     e5.set_xlim(-7.5, 12)
-    e5.text(0.98, 0.98, 'Tick, linear\nArrow, nonlinear\nShaded, $\\pm$0.0024', transform=e5.transAxes,
+    e5.text(0.98, 0.98, 'Tick, linear\nArrowhead, nonlinear\nShaded, $\\pm$0.0024', transform=e5.transAxes,
             fontsize=5.5, color=MUTED, ha='right', va='top')
     e5.legend(handles=[Patch(color=CAL, label='CALVADOS-2'), Patch(color=RCH, label='Mpipi-Recharged')],
               frameon=False, fontsize=5.5, loc='upper center', bbox_to_anchor=(0.5, -0.3), ncol=2, handlelength=1)
@@ -459,19 +461,23 @@ def fig4(d, out, go_path):
             pl = HistGradientBoostingRegressor(max_iter=400, learning_rate=0.05, random_state=0).fit(tr[DESC], tr[col]).predict(g[DESC])
             frows.append(dict(ff=ffn, taxon=k, within=pearsonr(pw, g[col])[0] ** 2, held_out=pearsonr(pl, g[col])[0] ** 2))
     Fd = pd.DataFrame(frows); Fd.to_csv(f'{out}/fig4f_leave_one_taxon_out.csv', index=False)
-    lim = [0.55, 0.9]
-    e6.plot(lim, lim, color=MUTED, lw=0.6, ls=':')
+    # dumbbells in the layout of panel e: open marker = within-taxon cross-validation, filled = taxon held out
     for fi, (col, ffn, ls, _) in enumerate(FF):
-        s = Fd[Fd.ff == ffn]
-        e6.scatter(s.within, s.held_out, s=28, marker='o' if fi == 0 else 's', color=FFC[col], edgecolors='white', lw=0.5, label=ffn)
-        if fi == 0:
-            for _, r in s.iterrows():
-                off = {'Protists': (-34, 3), 'Plants': (5, -8), 'Bacteria': (5, -8), 'Mammals': (-38, 0),
-                       'Fungi': (-24, 4), 'Viruses': (5, -8)}[r.taxon]
-                e6.annotate(r.taxon, (r.within, r.held_out), xytext=off, textcoords='offset points', fontsize=5.5, color=INK)
-    e6.set_xlim(lim); e6.set_ylim(lim)
-    e6.set_xlabel(r'$R^2$ within taxon (cross-validation)'); e6.set_ylabel(r'$R^2$ for held-out taxon')
-    e6.legend(frameon=False, fontsize=5.5, loc='upper left')
+        s_ = Fd[Fd.ff == ffn].set_index('taxon')
+        mk = 'o' if fi == 0 else 's'
+        for yi, k in enumerate(TAXA):
+            y = yi + (-0.19 if fi == 0 else 0.19)
+            w, h = s_.loc[k, 'within'], s_.loc[k, 'held_out']
+            e6.plot([w, h], [y, y], color=FFC[col], lw=1.3, solid_capstyle='butt', zorder=1)
+            e6.scatter([w], [y], s=26, marker=mk, facecolors='white', edgecolors=FFC[col], lw=1.1, zorder=2)
+            e6.scatter([h], [y], s=26, marker=mk, color=FFC[col], edgecolors='white', lw=0.4, zorder=3)
+    e6.set_yticks(range(6)); e6.set_yticklabels(TAXA); e6.set_ylim(5.6, -0.6)
+    e6.set_xlim(0.55, 0.92)
+    e6.set_xlabel(r'$R^2$ of the nonlinear model')
+    e6.text(0.02, 0.98, 'Open, within taxon\nFilled, taxon held out', transform=e6.transAxes,
+            fontsize=5.5, color=MUTED, ha='left', va='top')
+    e6.legend(handles=[Patch(color=CAL, label='CALVADOS-2'), Patch(color=RCH, label='Mpipi-Recharged')],
+              frameon=False, fontsize=5.5, loc='upper center', bbox_to_anchor=(0.5, -0.3), ncol=2, handlelength=1)
     panel(e6, 'f', 'The model transfers between taxa', x=-0.3)
     fig.tight_layout(w_pad=2.0, h_pad=2.4, rect=(0, 0, 0.985, 1))
     check_layout(fig, 'fig4_occupancy')

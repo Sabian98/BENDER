@@ -93,7 +93,7 @@ def main(bio, gg, saxs, meta, go, figdir, out):
             s = data[(data.aN > lo) & (data.aN <= hi)] if lo > 0 else data[data.aN <= hi]
             r = spearmanr(s.FCR, s[col]); cells.append(f'{f(r.correlation, 2)} ({len(s)})')
         rows.append([ffn] + cells)
-    tex_table(f'{out}/tab_branches.tex', 'Spearman $\\rho$ between FCR and $\\nu$ within bins of $|$NCPR$|$, with the number of IDPs in parentheses. Negative values mean that added charge compacts chains and positive values that it expands them.',
+    tex_table(f'{out}/tab_branches.tex', 'Spearman $\\rho$ between FCR and $\\nu$ within bins of $|$NCPR$|$, with the number of IDPs in parentheses. Negative values mean that added charge compacts chains and positive values mean that it expands them.',
               'tab:branches', ['Force field'] + ELAB, rows, 'lccccc')
 
     # S5 diagram of states
@@ -134,7 +134,7 @@ def main(bio, gg, saxs, meta, go, figdir, out):
             q = fl[(fl.ff == ffn) & (fl.taxon == k)].iloc[0]
             row += [f(1000 * lin, 1), f(1000 * flx, 1), f(q.within, 3), f(q.held_out, 3)]
         rows.append(row)
-    tex_table(f'{out}/tab_transfer.tex', 'Mean out-of-fold residual of each taxon ($\\nu \\times 10^3$) under the linear model and the nonlinear model, and $R^2$ of the nonlinear model from cross-validation within the taxon and for the taxon held out of training.',
+    tex_table(f'{out}/tab_transfer.tex', 'Mean prediction error of each taxon ($\\nu \\times 10^3$, observed minus predicted, with each IDP predicted by a model not trained on it) under the linear model and the nonlinear model, and $R^2$ of the nonlinear model from cross-validation within the taxon and for the taxon held out of training.',
               'tab:transfer', ['Taxon', 'C2 linear', 'C2 nonlinear', 'C2 within', 'C2 held out', 'MR linear', 'MR nonlinear', 'MR within', 'MR held out'],
               rows, 'lcccccccc', note='C2, \\textsc{calvados-2}. MR, Mpipi-Recharged.')
 
