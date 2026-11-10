@@ -75,7 +75,7 @@ def main(bio, gg, saxs, meta, go, figdir, out):
     m = pd.read_csv(f'{figdir}/fig2a_stage_markers.csv')
     rows = [[r.taxon, r.ff, f'{f(r.fcr_min, 2)} ({f(r.fcr_min_value, 3)})', f'{r.ncpr_onset:.3f} ({r.ncpr_lo:.3f} to {r.ncpr_hi:.3f})',
              f'{r.scd_onset:.3f} ({r.scd_lo:.3f} to {r.scd_hi:.3f})', f(r.lys_over_arg, 2)] for r in m.itertuples()]
-    tex_table(f'{out}/tab_stages.tex', 'Stage markers along $\\nu$ for each taxon and force field. Onsets are medians of 200 bootstrap hinge fits with 95\\% intervals in parentheses. The FCR minimum and the crossing of Lysine over Arginine are the centers of the binned values, with the mean FCR at the minimum in parentheses.',
+    tex_table(f'{out}/tab_stages.tex', 'Positions along $\\nu$ of the four markers of the charge transition for each taxon and force field. Onsets are medians of 200 bootstrap hinge fits with 95\\% intervals in parentheses. The FCR minimum and the crossing of Lysine over Arginine are the centers of the binned values, with the mean FCR at the minimum in parentheses.',
               'tab:stages', ['Taxon', 'Force field', 'FCR minimum', '$|$NCPR$|$ onset', 'SCD onset', 'Lys over Arg'], rows, 'llcccc')
 
     # S3 curve agreement
@@ -93,7 +93,7 @@ def main(bio, gg, saxs, meta, go, figdir, out):
             s = data[(data.aN > lo) & (data.aN <= hi)] if lo > 0 else data[data.aN <= hi]
             r = spearmanr(s.FCR, s[col]); cells.append(f'{f(r.correlation, 2)} ({len(s)})')
         rows.append([ffn] + cells)
-    tex_table(f'{out}/tab_branches.tex', 'Spearman $\\rho$ between FCR and $\\nu$ within bins of $|$NCPR$|$, with the number of IDPs in parentheses. Negative values mean that added charge compacts chains.',
+    tex_table(f'{out}/tab_branches.tex', 'Spearman $\\rho$ between FCR and $\\nu$ within bins of $|$NCPR$|$, with the number of IDPs in parentheses. Negative values mean that added charge compacts chains and positive values that it expands them.',
               'tab:branches', ['Force field'] + ELAB, rows, 'lccccc')
 
     # S5 diagram of states
@@ -123,7 +123,7 @@ def main(bio, gg, saxs, meta, go, figdir, out):
                               cv=KFold(5, shuffle=True, random_state=0))
         r2g = 1 - np.var(d[col] - p) / np.var(d[col])
         rows.append([ffn, f(m0.rsquared, 3), f(m1.rsquared, 3), f'{m1.compare_f_test(m0)[1]:.1e}', f(r2g, 3)])
-    tex_table(f'{out}/tab_models.tex', 'Models of $\\nu$ on eleven sequence descriptors. Linear $R^2$ without and with a taxon factor, the $F$ test between them, and the five-fold cross-validated $R^2$ of the gradient-boosting map without a taxon label.',
+    tex_table(f'{out}/tab_models.tex', 'Models of $\\nu$ on eleven sequence descriptors. Linear $R^2$ without and with a taxon factor, the $F$ test between them, and the five-fold cross-validated $R^2$ of the nonlinear (gradient-boosting) model without a taxon label.',
               'tab:models', ['Force field', 'Linear $R^2$', 'Linear $R^2$ + taxon', '$F$ test $p$', 'Nonlinear CV $R^2$'], rows, 'lcccc')
     e = pd.read_csv(f'{figdir}/fig4e_taxon_offsets.csv'); fl = pd.read_csv(f'{figdir}/fig4f_leave_one_taxon_out.csv')
     rows = []
