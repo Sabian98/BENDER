@@ -33,7 +33,7 @@ ELAB = ['0 to 0.05', '0.05 to 0.1', '0.1 to 0.2', '0.2 to 0.35', 'above 0.35']
 def tex_table(path, caption, label, header, rows, colspec, small=True, note=None, longtable=False):
     body = '\n'.join(' & '.join(str(c) for c in r) + r' \\' for r in rows)
     if longtable:
-        s = (r'{\scriptsize\setlength{\tabcolsep}{2.5pt}' + '\n' + r'\begin{longtable}{' + colspec + '}\n' + r'\caption{' + caption + r'}\label{' + label
+        s = (r'{\scriptsize\setlength{\tabcolsep}{2.2pt}' + '\n' + r'\begin{longtable}{' + colspec + '}\n' + r'\caption{' + caption + r'}\label{' + label
              + r'}\\' + '\n' + r'\toprule' + '\n' + ' & '.join(header) + r' \\' + '\n' + r'\midrule' + '\n' + r'\endfirsthead'
              + '\n' + r'\toprule' + '\n' + ' & '.join(header) + r' \\' + '\n' + r'\midrule' + '\n' + r'\endhead' + '\n'
              + body + '\n' + r'\bottomrule' + '\n' + r'\end{longtable}' + '\n}')
@@ -124,7 +124,7 @@ def main(bio, gg, saxs, meta, go, figdir, out):
         r2g = 1 - np.var(d[col] - p) / np.var(d[col])
         rows.append([ffn, f(m0.rsquared, 3), f(m1.rsquared, 3), f'{m1.compare_f_test(m0)[1]:.1e}', f(r2g, 3)])
     tex_table(f'{out}/tab_models.tex', 'Models of $\\nu$ on eleven sequence descriptors. Linear $R^2$ without and with a taxon factor, the $F$ test between them, and the five-fold cross-validated $R^2$ of the gradient-boosting map without a taxon label.',
-              'tab:models', ['Force field', 'Linear $R^2$', 'Linear $R^2$ + taxon', '$F$ test $p$', 'Flexible CV $R^2$'], rows, 'lcccc')
+              'tab:models', ['Force field', 'Linear $R^2$', 'Linear $R^2$ + taxon', '$F$ test $p$', 'Nonlinear CV $R^2$'], rows, 'lcccc')
     e = pd.read_csv(f'{figdir}/fig4e_taxon_offsets.csv'); fl = pd.read_csv(f'{figdir}/fig4f_leave_one_taxon_out.csv')
     rows = []
     for k in TAXA:
@@ -134,8 +134,8 @@ def main(bio, gg, saxs, meta, go, figdir, out):
             q = fl[(fl.ff == ffn) & (fl.taxon == k)].iloc[0]
             row += [f(1000 * lin, 1), f(1000 * flx, 1), f(q.within, 3), f(q.held_out, 3)]
         rows.append(row)
-    tex_table(f'{out}/tab_transfer.tex', 'Mean out-of-fold residual of each taxon ($\\nu \\times 10^3$) under the linear model and the flexible map, and $R^2$ of the flexible map from cross-validation within the taxon and for the taxon held out of training.',
-              'tab:transfer', ['Taxon', 'C2 linear', 'C2 flexible', 'C2 within', 'C2 held out', 'MR linear', 'MR flexible', 'MR within', 'MR held out'],
+    tex_table(f'{out}/tab_transfer.tex', 'Mean out-of-fold residual of each taxon ($\\nu \\times 10^3$) under the linear model and the nonlinear model, and $R^2$ of the nonlinear model from cross-validation within the taxon and for the taxon held out of training.',
+              'tab:transfer', ['Taxon', 'C2 linear', 'C2 nonlinear', 'C2 within', 'C2 held out', 'MR linear', 'MR nonlinear', 'MR within', 'MR held out'],
               rows, 'lcccccccc', note='C2, \\textsc{calvados-2}. MR, Mpipi-Recharged.')
 
     # S7 SAXS constructs
@@ -148,8 +148,8 @@ def main(bio, gg, saxs, meta, go, figdir, out):
         return s.replace('&', '\\&').replace('_', '\\_').replace('%', '\\%').replace('#', '\\#')
     rows = [[r.sasbdb_id, clean(r.protein_name), r.taxon.replace('Other vertebrate', 'Vertebrate'), 'yes' if r.set == 'strict' else 'no', r.n_res, f(r.saxs_rg_nm, 2), f(r.nueff_saxs, 3), f(r.nueff_cal_sim, 3),
              f(r.nueff_rech_sim, 3), f(r.pred_nueff_cal, 3), f(r.pred_nueff_rech, 3), f(r.FCR, 2), f(r.NCPR, 2)] for r in x.itertuples()]
-    tex_table(f'{out}/tab_saxs.tex', 'The 63 SAXS constructs. Measured radius of gyration (nm) and effective exponent, $\\nu_\\mathrm{eff}$ from direct simulation in \\textsc{calvados-2} (C2) and Mpipi-Recharged (MR), $\\nu_\\mathrm{eff}$ from the sequence-only map trained on each force field, and the charge descriptors of each construct. Strict constructs meet both disorder criteria, and the others lack a UniProt mapping.',
-              'tab:saxs', ['SASBDB', 'Protein', 'Taxon', 'Strict', '$N$', '$R_g$', '$\\nu_\\mathrm{eff}$', 'C2 sim.', 'MR sim.', 'C2 map', 'MR map', 'FCR', 'NCPR'],
+    tex_table(f'{out}/tab_saxs.tex', 'The 63 SAXS constructs. Measured radius of gyration (nm) and effective exponent, $\\nu_\\mathrm{eff}$ from direct simulation in \\textsc{calvados-2} (C2) and Mpipi-Recharged (MR), $\\nu_\\mathrm{eff}$ from the nonlinear model trained on each force field, and the charge descriptors of each construct. Strict constructs meet both disorder criteria, and the others lack a UniProt mapping.',
+              'tab:saxs', ['SASBDB', 'Protein', 'Taxon', 'Strict', '$N$', '$R_g$', '$\\nu_\\mathrm{eff}$', 'C2 sim.', 'MR sim.', 'C2 model', 'MR model', 'FCR', 'NCPR'],
               rows, 'lllclrrrrrrrr', longtable=True)
 
     # S8 GO

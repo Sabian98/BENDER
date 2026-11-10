@@ -98,10 +98,10 @@ def place_icon(ax, path, cx, cy, maxw, maxh):
 
 
 def main(out, bio=None):
-    """Two-branch map with taxon occupancy. The curve is a thematic U of charged fraction along nu, whose left
+    """Two-branch axis with taxon occupancy. The curve is a thematic U of charged fraction along nu, whose left
     branch is labelled 'added charge compacts' and right branch 'added charge expands', with the shared window
     shaded. Taxon badges link to each taxon's mean nu (CALVADOS-2) and their rings show the share of strong
-    polycations (blue) and polyanions (red), so taxa sit on the same map in different ways."""
+    polycations (blue) and polyanions (red), so taxa sit on the same axis in different ways."""
     import pandas as pd
     from matplotlib.path import Path
     from matplotlib.patches import PathPatch, Arc
@@ -176,7 +176,7 @@ def main(out, bio=None):
     ax.text(0.37, 0.035, 'Polycations', ha='left', va='bottom', fontsize=5.8, color=MUTED)
     ax.add_patch(Arc((0.98, 0.065), 0.08, 0.08, theta1=30, theta2=150, color=NEG, lw=1.8))
     ax.text(1.04, 0.035, 'Polyanions', ha='left', va='bottom', fontsize=5.8, color=MUTED)
-    ax.text(3.22, 0.035, 'One map, taxa differ in where they sit', ha='right', va='bottom', fontsize=6.0, color=MUTED, style='italic')
+    ax.text(3.22, 0.035, 'One axis, taxa differ in where they sit', ha='right', va='bottom', fontsize=6.0, color=MUTED, style='italic')
     fig.savefig(f'{out}/toc_map.pdf'); fig.savefig(f'{out}/toc_map.png', dpi=300)
     fig.savefig(f'{out}/toc.pdf'); fig.savefig(f'{out}/toc.png', dpi=300); plt.close(fig)
 

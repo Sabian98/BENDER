@@ -335,10 +335,10 @@ def fig3(d, gg_path, saxs_path, out):
         c.text(gi, -0.2, f'MAE {mm:.3f} / {ms:.3f}', ha='center', fontsize=5.5, color=MUTED, transform=c.get_xaxis_transform())
     c.set_xticks([0, 1]); c.set_xticklabels([r[0] for r in rowsc]); c.set_ylim(0, 0.9)
     c.set_ylabel('Pearson r with SAXS')
-    c.legend(handles=[Patch(facecolor='white', edgecolor=MUTED, hatch='////', label='Sequence-only map'),
+    c.legend(handles=[Patch(facecolor='white', edgecolor=MUTED, hatch='////', label='Nonlinear model'),
                       Patch(facecolor=MUTED, edgecolor=MUTED, label='Direct simulation')],
              frameon=False, fontsize=5.5, loc='upper right', handlelength=1.2)
-    panel(c, 'd', 'Map vs simulation', x=-0.22)
+    panel(c, 'd', 'Model vs simulation', x=-0.22)
     fig.subplots_adjust(left=0.11, right=0.97, bottom=0.09, top=0.93)
     check_layout(fig, 'fig3_robust')
     fig.savefig(f'{out}/fig3_robust.pdf'); fig.savefig(f'{out}/fig3_robust.png', dpi=200); plt.close(fig)
@@ -371,7 +371,7 @@ def fig4(d, out, go_path):
     a.set_xlim(0, 100); a.set_xlabel('Share of IDPs (%)')
     a.text(101, -0.9, 'Polycation / polyanion', fontsize=5.5, color=MUTED)
     a.legend(loc='upper center', bbox_to_anchor=(0.5, -0.22), ncol=3, frameon=False, fontsize=5.5, handlelength=1)
-    panel(a, 'a', 'Diagram-of-states occupancy', x=-0.32)
+    panel(a, 'a', 'Share in each region', x=-0.32)
 
     b.axvline(0, color=MUTED, lw=0.6)
     for fi, (col, ffn, ls, _) in enumerate(FF):
@@ -405,7 +405,7 @@ def fig4(d, out, go_path):
     c.text(0.03, 0.97, 'Variance explained', transform=c.transAxes, fontsize=5.5, ha='left', va='top', color=MUTED)
     c.set_xlim(lim); c.set_ylim(lim)
     c.set_xlabel(r'Predicted mean $\nu$'); c.set_ylabel(r'Observed mean $\nu$')
-    panel(c, 'd', 'Occupancy sets mean size', x=-0.3)
+    panel(c, 'd', 'Sequences set mean size', x=-0.3)
     G = pd.read_csv(go_path, sep='\t')
     terms = ['CC: nucleosome', 'MF: DNA binding', 'MF: structural constituent of chromatin', 'KW: DNA condensation',
              'CC: ribosome', 'BP: translation', 'KW: Ribonucleoprotein']
@@ -443,11 +443,11 @@ def fig4(d, out, go_path):
     e5.set_yticks(range(6)); e5.set_yticklabels(TAXA); e5.set_ylim(5.6, -0.6)
     e5.set_xlabel(r'Mean taxon residual ($\nu \times 10^{3}$)')
     e5.set_xlim(-7.5, 12)
-    e5.text(0.98, 0.98, 'Tick, linear model\nArrow head, flexible map\nShaded, within 0.0024', transform=e5.transAxes,
+    e5.text(0.98, 0.98, 'Tick, linear\nArrow, nonlinear\nShaded, $\\pm$0.0024', transform=e5.transAxes,
             fontsize=5.5, color=MUTED, ha='right', va='top')
     e5.legend(handles=[Patch(color=CAL, label='CALVADOS-2'), Patch(color=RCH, label='Mpipi-Recharged')],
               frameon=False, fontsize=5.5, loc='upper center', bbox_to_anchor=(0.5, -0.3), ncol=2, handlelength=1)
-    panel(e5, 'e', 'Linear rules invent taxon offsets', x=-0.3)
+    panel(e5, 'e', 'Linear fits leave false taxon offsets', x=-0.3)
 
     # f, leave one taxon out
     frows = []
@@ -472,7 +472,7 @@ def fig4(d, out, go_path):
     e6.set_xlim(lim); e6.set_ylim(lim)
     e6.set_xlabel(r'$R^2$ within taxon (cross-validation)'); e6.set_ylabel(r'$R^2$ for held-out taxon')
     e6.legend(frameon=False, fontsize=5.5, loc='upper left')
-    panel(e6, 'f', 'The map transfers between taxa', x=-0.3)
+    panel(e6, 'f', 'The model transfers between taxa', x=-0.3)
     fig.tight_layout(w_pad=2.0, h_pad=2.4, rect=(0, 0, 0.985, 1))
     check_layout(fig, 'fig4_occupancy')
     fig.savefig(f'{out}/fig4_occupancy.pdf'); fig.savefig(f'{out}/fig4_occupancy.png', dpi=200); plt.close(fig)
