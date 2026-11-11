@@ -467,7 +467,8 @@ def fig4(d, out, go_path):
             erows.append(dict(ff=ffn, model=mname, **res.to_dict()))
     E = pd.DataFrame(erows); E.to_csv(f'{out}/fig4e_taxon_offsets.csv', index=False)
     e5.axvline(0, color=MUTED, lw=0.6)
-    e5.axvspan(-2.4, 2.4, color='#F2F2F2', lw=0, zorder=0)
+    band = np.ceil(1e4 * np.abs(E[E.model == 'Flexible'][TAXA].values).max()) / 1e4   # largest taxon error of the nonlinear model
+    e5.axvspan(-1000 * band, 1000 * band, color='#F2F2F2', lw=0, zorder=0)
     for fi, (col, ffn, ls, _) in enumerate(FF):
         rl_ = E[(E.ff == ffn) & (E.model == 'Linear')].iloc[0]; rf_ = E[(E.ff == ffn) & (E.model == 'Flexible')].iloc[0]
         for yi, k in enumerate(TAXA):
@@ -478,7 +479,7 @@ def fig4(d, out, go_path):
     e5.set_yticks(range(6)); e5.set_yticklabels(TAXA); e5.set_ylim(5.6, -0.6)
     e5.set_xlabel(r'Mean prediction error ($\nu \times 10^{3}$)')
     e5.set_xlim(-7.5, 12)
-    e5.text(0.98, 0.98, 'Tick, linear\nArrowhead, nonlinear\nShaded, $\\pm$0.0024', transform=e5.transAxes,
+    e5.text(0.98, 0.98, f'Tick, linear\nArrowhead, nonlinear\nShaded, $\\pm${band:.4f}', transform=e5.transAxes,
             fontsize=5.5, color=MUTED, ha='right', va='top')
     e5.legend(handles=[Patch(color=CAL, label='CALVADOS-2'), Patch(color=RCH, label='Mpipi-Recharged')],
               frameon=False, fontsize=5.5, loc='upper center', bbox_to_anchor=(0.5, -0.3), ncol=2, handlelength=1)

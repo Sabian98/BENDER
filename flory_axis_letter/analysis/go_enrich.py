@@ -16,7 +16,7 @@ a['terms']=a.apply(terms,axis=1)
 d=d.merge(a[['UniProt_ID','Protein names','terms']],on='UniProt_ID',how='left')
 d['annotated']=d.terms.apply(lambda s: isinstance(s,set) and len(s)>0)
 print('sequences',len(d),'with any GO/keyword',d.annotated.sum())
-res=[]
+res=[]; summ=[]
 for ff,col in [('CALVADOS-2','nu_orig'),('Mpipi-Recharged','nu')]:
     E=d[col]>0.63
     groups={'expanded_basic':E&(d.NCPR>0.1),'expanded_acidic':E&(d.NCPR<-0.1)}
@@ -37,7 +37,9 @@ for ff,col in [('CALVADOS-2','nu_orig'),('Mpipi-Recharged','nu')]:
             OR,p=fisher_exact([[k,n-k],[K-k,N-n-(K-k)]],alternative='greater')
             rows.append(dict(ff=ff,group=g,term=t,k=k,n=n,frac_group=k/n,frac_bg=K/N,odds=OR,p=p))
         r=pd.DataFrame(rows)
+        summ.append(dict(ff=ff,group=g,n=int(mask.sum()),annotated=len(sel),testable=len(r),significant=int((multipletests(r.p,method='fdr_bh')[1]<0.05).sum()) if len(r) else 0))
         if len(r): r['q']=multipletests(r.p,method='fdr_bh')[1]; res.append(r)
 R=pd.concat(res).sort_values(['ff','group','p']); R.to_csv(out,sep='\t',index=False)
+pd.DataFrame(summ).to_csv(out.replace('.tsv','_groups.tsv'),sep='\t',index=False)
 for (ff,g),x in R.groupby(['ff','group']):
     print(f'\n== {ff} {g}'); print(x[x.q<0.05].head(18)[['term','k','n','frac_group','frac_bg','odds','q']].round(3).to_string(index=False))

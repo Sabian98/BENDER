@@ -18,7 +18,7 @@ gyration, Ree the end-to-end distance and Δν the MPIPI-Recharged value minus t
 | `controls/` | | ν and Rg of the control and parameter-swap runs (hnRNPA1 variants, termini and histidine controls, swaps), one file per force field and set |
 | `sequences/` | 10,282 | all sequences as FASTA and TSV |
 | `taxonomy/` | | NCBI lineages of every organism and the taxon assignment of every sequence |
-| `flory_axis_letter/` | 63 | SAXS constructs of at most 256 residues used by the Flory-axis letter (`saxs_eval_63.csv`) the UniProt Gene Ontology and keyword annotations it tests (`uniprot_annotations.tsv`, retrieved 2026-11-08), and the 32 IDPs with measured hydrodynamic radii from Table S1 of Marsh and Forman-Kay 2010 (`marsh_2010_table_s1.csv`) |
+| `flory_axis_letter/` | 63 | SAXS constructs of at most 256 residues used by the Flory-axis letter (`saxs_eval_63.csv`) the UniProt Gene Ontology and keyword annotations it tests (`uniprot_annotations.tsv`, retrieved 2026-11-08), the 32 IDPs with measured hydrodynamic radii from Table S1 of Marsh and Forman-Kay 2010 (`marsh_2010_table_s1.csv`), and the 1,422 withdrawn rice entries the letter leaves out (`exclude_rice_japonica.txt`, with the evidence in `rice_ref_match.tsv`) |
 
 The `delta_pi_pi_score` and `delta_cation_pi_score` columns are legacy columns that the paper does not use.
 

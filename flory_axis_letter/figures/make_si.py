@@ -21,7 +21,6 @@ plt.rcParams.update({'font.family': 'Arial', 'mathtext.fontset': 'cm', 'font.siz
                      'xtick.labelsize': 6.5, 'ytick.labelsize': 6.5, 'axes.linewidth': 0.6,
                      'axes.spines.top': False, 'axes.spines.right': False, 'pdf.fonttype': 42, 'savefig.dpi': 300})
 TAXA = ['Bacteria', 'Fungi', 'Mammals', 'Plants', 'Protists', 'Viruses']
-ORGANISMS = {'Bacteria': 654, 'Plants': 224, 'Fungi': 413, 'Mammals': 155, 'Protists': 246, 'Viruses': 464}
 CAL, RCH, GGL, INK, MUTED = '#6FA3D2', '#E3A35A', '#3A6E38', '#333333', '#777777'
 FF = [('nu_orig', 'CALVADOS-2', CAL, '-'), ('nu', 'Mpipi-Recharged', RCH, '--')]
 DESC = ['FCR', 'NCPR', 'SCD', 'SHD', 'f_aro', 'f_P', 'f_G', 'hydropathy_avg', 'f_K', 'f_R', 'logN']
@@ -61,11 +60,12 @@ def main(bio, gg, saxs, meta, go, figdir, out):
     G = d.merge(g, on='UniProt_ID')
 
     # S1 data set
+    ORGANISMS = raw.groupby('kingdom').taxonomy_id.nunique().to_dict(); n_org = raw.taxonomy_id.nunique()
     rows = []
     for k in TAXA:
         rows.append([k, f'{(raw.kingdom == k).sum():,}', f'{ORGANISMS[k]:,}', f'{(d.kingdom == k).sum():,}',
                      f'{(G.kingdom == k).sum():,}', (d[d.kingdom == k].nu_orig > 0.63).sum(), (d[d.kingdom == k].nu > 0.63).sum()])
-    rows.append(['Total', f'{len(raw):,}', f'{sum(ORGANISMS.values()):,}', f'{len(d):,}', f'{len(G):,}',
+    rows.append(['Total', f'{len(raw):,}', f'{n_org:,}', f'{len(d):,}', f'{len(G):,}',
                  (d.nu_orig > 0.63).sum(), (d.nu > 0.63).sum()])
     tex_table(f'{out}/tab_dataset.tex', 'Sequences per taxon. Analyzed sequences pass the fit of $\\nu$ in both \\textsc{calvados-2} and Mpipi-Recharged, and expanded IDPs have $\\nu > 0.63$ in the force field named.',
               'tab:dataset', ['Taxon', 'Sequences', 'Organisms', 'Analyzed', 'Mpipi-GG', 'Expanded (C2)', 'Expanded (MR)'],
@@ -158,8 +158,45 @@ def main(bio, gg, saxs, meta, go, figdir, out):
         s = G8[(G8.ff == ffn) & (G8.group == 'expanded_basic') & (G8.q < 0.05)].sort_values('q').head(12)
         for r in s.itertuples():
             rows.append([ffn, r.term.replace('&', '\\&'), f'{r.k}/{r.n}', f(r.frac_bg, 3), f(r.odds, 1), f'{r.q:.1e}'])
-    tex_table(f'{out}/tab_go.tex', 'Gene Ontology terms (BP, MF, and CC) and UniProt keywords (KW) enriched among annotated expanded basic IDPs ($\\nu > 0.63$, NCPR above 0.1) against all annotated IDPs, with the share of the group, the share of the background, the odds ratio, and the Benjamini--Hochberg $q$. Only 8 (\\textsc{calvados-2}) and 7 (Mpipi-Recharged) expanded acidic IDPs carry any annotation, too few to test.',
+    gs = pd.read_csv(go.replace('.tsv', '_groups.tsv'), sep='\t').set_index(['ff', 'group'])
+    gb = lambda ff, g, c: int(gs.loc[(ff, g), c])
+    tex_table(f'{out}/tab_go.tex', 'Gene Ontology terms (BP, MF, and CC) and UniProt keywords (KW) enriched among annotated expanded basic IDPs ($\\nu > 0.63$, NCPR above 0.1) against all annotated IDPs, with the share of the group, the share of the background, the odds ratio, and the Benjamini--Hochberg $q$. '
+              f'Of the expanded basic IDPs, {gb("CALVADOS-2", "expanded_basic", "annotated")} of {gb("CALVADOS-2", "expanded_basic", "n")} (\\textsc{{calvados-2}}) and {gb("Mpipi-Recharged", "expanded_basic", "annotated")} of {gb("Mpipi-Recharged", "expanded_basic", "n")} (Mpipi-Recharged) carry any annotation. '
+              f'Of the expanded acidic IDPs (NCPR below $-0.1$), only {gb("CALVADOS-2", "expanded_acidic", "annotated")} of {gb("CALVADOS-2", "expanded_acidic", "n")} and {gb("Mpipi-Recharged", "expanded_acidic", "annotated")} of {gb("Mpipi-Recharged", "expanded_acidic", "n")} do, with {gb("CALVADOS-2", "expanded_acidic", "testable")} and {gb("Mpipi-Recharged", "expanded_acidic", "testable")} terms carried by five or more, too few to test.',
               'tab:go', ['Force field', 'Term', 'Group', 'Background', 'Odds ratio', '$q$'], rows, 'llcccc')
+
+    # S11 compacting branch per taxon, S12 polyelectrolyte shares under organism controls
+    rows = []
+    for k in TAXA:
+        s0 = d[(d.kingdom == k) & (d.aN <= 0.05)]; row = [k, len(s0)]
+        for col in ['nu_orig', 'nu']:
+            r = spearmanr(s0.FCR, s0[col]); row.append(f'{f(r.correlation, 2)} ({r.pvalue:.0e})'.replace('e-0', 'e-').replace('e+00', ''))
+        rows.append(row)
+    s0 = d[d.aN <= 0.05]; row = ['Pooled', len(s0)]
+    for col in ['nu_orig', 'nu']:
+        r = spearmanr(s0.FCR, s0[col]); row.append(f'{f(r.correlation, 2)} ({r.pvalue:.0e})'.replace('e-0', 'e-'))
+    rows.append(row)
+    tex_table(f'{out}/tab_branch_taxa.tex', 'The compacting branch per taxon. Spearman $\\rho$ between FCR and $\\nu$ among IDPs with $|$NCPR$|$ of 0.05 or less, with $p$ in parentheses, in \\textsc{calvados-2} (C2) and Mpipi-Recharged (MR).',
+              'tab:branchtaxa', ['Taxon', 'IDPs', 'C2 $\\rho$ ($p$)', 'MR $\\rho$ ($p$)'], rows, 'lrcc')
+    def shares(x):
+        return 100 * (x.reg == 'Polyanion').mean(), 100 * (x.reg == 'Polycation').mean()
+    rows = []
+    for k in TAXA:
+        t = d[d.kingdom == k]; top = t.organism.value_counts()
+        a0, c0 = shares(t); a1, c1 = shares(t[t.organism != top.index[0]])
+        cap = t.groupby('organism', group_keys=False).apply(lambda g: g.sample(min(len(g), 50), random_state=0))
+        a2, c2 = shares(cap)
+        # remove the single organism that contributes the most polyanions (for the polyanion share) or polycations
+        ta, tc = t[t.reg == 'Polyanion'].organism.value_counts(), t[t.reg == 'Polycation'].organism.value_counts()
+        a3 = shares(t[t.organism != ta.index[0]])[0] if len(ta) else 0.0
+        c3 = shares(t[t.organism != tc.index[0]])[1] if len(tc) else 0.0
+        name = top.index[0].replace('Human immunodeficiency virus type 1', 'HIV-1')
+        name = name if k == 'Viruses' else '\\textit{' + ' '.join(name.split()[:2]) + '}'
+        rows.append([k, name, f'{top.iloc[0]} ({100 * top.iloc[0] / len(t):.0f}\\%)', f'{a0:.1f} / {c0:.1f}', f'{a1:.1f} / {c1:.1f}',
+                     f'{a3:.1f} / {c3:.1f}', f'{a2:.1f} / {c2:.1f}'])
+    tex_table(f'{out}/tab_robust_org.tex', 'Strong polyanions and polycations (\\% of the IDPs of each taxon) in the analyzed set, after removing the largest contributing organism of each taxon, after removing the organism that contributes the most strong polyanions or polycations, and after keeping at most 50 sequences per organism (random draw, seed 0).',
+              'tab:robustorg', ['Taxon', 'Largest organism', 'IDPs', 'All', 'No largest', 'No top source', 'At most 50'], rows, 'llrcccc',
+              note='Each cell gives polyanions / polycations.')
 
     # Figure S1, extra descriptors per taxon
     extra = [('f_K', 'Lysine'), ('f_R', 'Arginine'), ('f_aro', 'Aromatic'), ('f_P', 'Proline'), ('f_G', 'Glycine'), ('hydropathy_avg', 'Hydropathy')]

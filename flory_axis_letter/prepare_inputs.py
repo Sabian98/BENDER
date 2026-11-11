@@ -3,7 +3,8 @@
 The letter compares CALVADOS-2 and MPIPI-Recharged on the same sequences. This script joins the CALVADOS-2 table
 (data/bender_bio/BENDER_BIO.csv, where nu_orig and rg_orig are the CALVADOS-2 values) with the MPIPI-Recharged
 features (data/mpipi_recharged/recharged_300K_features.csv, where nu and rg are the MPIPI-Recharged values) and marks
-the sequences whose Flory fit reaches R^2 >= 0.99 in each force field (nu_ok_cal, nu_ok_rech).
+the sequences whose Flory fit reaches R^2 >= 0.99 in each force field (nu_ok_cal, nu_ok_rech). Withdrawn rice
+entries listed in data/flory_axis_letter/exclude_rice_japonica.txt are removed.
 
 Usage: python prepare_inputs.py            writes <BENDER_OUT>/flory_axis_letter/bio.csv
 """
@@ -25,6 +26,11 @@ def main():
     # values; the CALVADOS-2 values stay in the *_orig columns and nu_fit_r2.
     cal = cal.drop(columns=[c for c in rch.columns if c in cal.columns and c != "UniProt_ID"])
     bio = cal.merge(rch, on="UniProt_ID", how="left", validate="one_to_one")
+    # Rice (Oryza sativa subsp. japonica) entries that UniProt has deleted and that share no 20-residue segment with the
+    # current rice reference proteome (analysis/rice_ref_match.py) are no longer rice gene models and are left out.
+    excl = set((DATA / "flory_axis_letter" / "exclude_rice_japonica.txt").read_text().split())
+    n0 = len(bio); bio = bio[~bio.UniProt_ID.isin(excl)]
+    print(f"left out {n0 - len(bio):,} withdrawn rice entries (exclude_rice_japonica.txt)")
     bio = bio.assign(nu_ok_cal=bio["nu_fit_r2"] >= R2_MIN, nu_ok_rech=bio["nu_r2"] >= R2_MIN,
                      label_source="Mpipi-Recharged 300K")
     out = OUT / "flory_axis_letter"
