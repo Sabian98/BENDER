@@ -444,7 +444,7 @@ def fig4(d, out, go_path):
     G = pd.read_csv(go_path, sep='\t')
     terms = ['CC: nucleosome', 'MF: DNA binding', 'MF: structural constituent of chromatin', 'KW: DNA condensation',
              'CC: ribosome', 'BP: translation', 'KW: Ribonucleoprotein']
-    nice = ['Nucleosome', 'DNA binding', 'Chromatin structure', 'DNA condensation', 'Ribosome', 'Translation',
+    nice = ['Nucleosome component', 'DNA binding', 'Chromatin structure', 'DNA condensation', 'Ribosome component', 'Translation',
             'Ribonucleoprotein']
     for fi, ffn in enumerate(['CALVADOS-2', 'Mpipi-Recharged']):
         x = G[(G.ff == ffn) & (G.group == 'expanded_basic')].set_index('term').reindex(terms)
