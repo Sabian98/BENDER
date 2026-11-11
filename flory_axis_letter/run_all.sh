@@ -26,6 +26,9 @@ done
 echo "3. SAXS map"
 $PY "$L/analysis/saxs_map.py" "$BIO" "$DATA/flory_axis_letter/saxs_eval_63.csv" "$OUT" > "$OUT/logs/saxs_map.out"
 
+echo "3b. Hydrodynamic radii and charge-hydropathy plot (Section S9, Table S10)"
+$PY "$L/analysis/rh_ch_check.py" "$BIO" "$DATA/flory_axis_letter/marsh_2010_table_s1.csv" "$OUT/si" > "$OUT/logs/rh_ch_check.out"
+
 echo "4. Gene Ontology enrichment"
 # data/flory_axis_letter/uniprot_annotations.tsv was retrieved on 2026-11-08 with
 #   python flory_axis_letter/analysis/fetch_go.py "$BIO" data/flory_axis_letter/uniprot_annotations.tsv
