@@ -137,6 +137,16 @@ def boot_hinge(g, col, var, n=200, seed=0):
     return np.percentile(v, [50, 2.5, 97.5])
 
 
+KD = {'A': 1.8, 'R': -4.5, 'N': -3.5, 'D': -3.5, 'C': 2.5, 'Q': -3.5, 'E': -3.5, 'G': -0.4, 'H': -3.2, 'I': 4.5,
+      'L': 3.8, 'K': -3.9, 'M': 1.9, 'F': 2.8, 'P': -1.6, 'S': -0.8, 'T': -0.7, 'W': -0.9, 'Y': -1.3, 'V': 4.2}
+
+
+def ch_hydropathy(s):
+    """Mean Kyte-Doolittle hydropathy normalized to 0..1 over windows of five residues (Uversky et al. 2000)."""
+    h = np.array([(KD.get(c, 0) + 4.5) / 9 for c in s])
+    return h.mean() if len(h) < 5 else np.convolve(h, np.ones(5) / 5, mode='valid').mean()
+
+
 def fcr_min_and_cross(g, col):
     b = pd.cut(g[col], BINS)
     m = g.groupby(b, observed=True)[['FCR', 'f_K', 'f_R']].mean(); n = g.groupby(b, observed=True).size(); m = m[n >= 20]
@@ -188,6 +198,7 @@ def fig1(d, out):
 def fig2(d, out):
     fig = plt.figure(figsize=(7.0, 4.9))
     gs = fig.add_gridspec(2, 6, height_ratios=[1, 1.15], hspace=0.62, wspace=1.6)
+    gs2 = gs[1, :].subgridspec(1, 3, wspace=0.62)
     strips = [fig.add_subplot(gs[0, 0:2]), fig.add_subplot(gs[0, 2:4]), fig.add_subplot(gs[0, 4:6])]
     titles = ['FCR minimum', '|NCPR| begins to rise', 'SCD begins to rise']
     rows = []
@@ -219,7 +230,7 @@ def fig2(d, out):
                         Line2D([], [], marker='s', ls='none', mfc=RCH, mec='white', ms=5, label='Mpipi-Recharged')],
                frameon=False, fontsize=6, loc='upper right', bbox_to_anchor=(0.9, 0.99), ncol=2, handletextpad=0.1)
 
-    b = fig.add_subplot(gs[1, 0:3])
+    b = fig.add_subplot(gs2[0, 0])
     edges = [(0, 0.05), (0.05, 0.1), (0.1, 0.2), (0.2, 0.35), (0.35, 1.0)]
     labels = ['0 to\n0.05', '0.05 to\n0.1', '0.1 to\n0.2', '0.2 to\n0.35', 'above\n0.35']
     b.axhline(0, color=MUTED, lw=0.6)
@@ -229,14 +240,14 @@ def fig2(d, out):
             s = d[(d.aN > lo_) & (d.aN <= hi_)] if lo_ > 0 else d[d.aN <= hi_]
             rs.append(spearmanr(s.FCR, s[col]).correlation)
         b.plot(range(5), rs, ls=ls, color=FFC[col], lw=1.3, marker='o' if fi == 0 else 's', ms=4.5, mec='white', mew=0.5, label=ffn)
-    b.set_xticks(range(5)); b.set_xticklabels(labels, fontsize=6)
+    b.set_xticks(range(5)); b.set_xticklabels(labels, fontsize=5.5)
     b.set_xlabel('|NCPR| bin'); b.set_ylabel(r'Spearman $\rho$ (FCR, $\nu$)'); b.set_ylim(-0.34, 0.5)
     b.text(0.02, 0.97, 'Added charge expands chains', transform=b.transAxes, color=MUTED, fontsize=6, va='top')
     b.text(0.02, 0.03, 'Added charge compacts chains', transform=b.transAxes, color=MUTED, fontsize=6, va='bottom')
     b.legend(frameon=False, loc='upper left', bbox_to_anchor=(0.0, 0.9))
-    panel(b, 'b', 'The effect of charge changes sign', x=-0.2, y=1.04)
+    panel(b, 'b', 'The effect of charge changes sign', x=-0.3, y=1.04)
 
-    c = fig.add_subplot(gs[1, 3:6])
+    c = fig.add_subplot(gs2[0, 1])
     fx = np.arange(0.0, 0.85, 0.05); ny = np.arange(0.0, 0.70, 0.05)
     H = np.full((len(ny) - 1, len(fx) - 1), np.nan)
     for i in range(len(ny) - 1):
@@ -247,11 +258,33 @@ def fig2(d, out):
     im = c.imshow(H, origin='lower', extent=(fx[0], fx[-1], ny[0], ny[-1]), aspect='auto', cmap='Blues', vmin=0.50, vmax=0.66)
     c.plot([0, 0.68], [0, 0.68], color=MUTED, lw=0.6, ls=':')
     c.set_xlabel('FCR'); c.set_ylabel('|NCPR|'); c.set_xlim(0, 0.8); c.set_ylim(0, 0.68)
-    c.text(0.40, 0.012, 'Balanced polyampholytes', color=INK, fontsize=5.5, ha='center', va='bottom')
+    c.text(0.40, 0.012, 'Polyampholytes', color=INK, fontsize=5.5, ha='center', va='bottom')
     c.text(0.17, 0.50, 'Polyelectrolytes\n(|NCPR| = FCR)', color=INK, fontsize=5.5, ha='center')
-    cax = c.inset_axes([1.03, 0.0, 0.04, 1.0]); cb = fig.colorbar(im, cax=cax)
+    panel(c, 'c', 'Diagram of states', x=-0.3, y=1.04)
+
+    # d, the charge-hydropathy plane of Uversky et al. 2000, on the same color scale as c
+    e = fig.add_subplot(gs2[0, 2])
+    if 'H_ch' not in d:
+        d = d.assign(H_ch=d.sequence.map(ch_hydropathy))
+    hx = np.arange(0.15, 0.575, 0.025)
+    H2 = np.full((len(ny) - 1, len(hx) - 1), np.nan)
+    for i in range(len(ny) - 1):
+        for j in range(len(hx) - 1):
+            s = d[(d.H_ch >= hx[j]) & (d.H_ch < hx[j + 1]) & (d.aN >= ny[i]) & (d.aN < ny[i + 1])]
+            if len(s) >= 10:
+                H2[i, j] = s.nu_orig.median()
+    e.imshow(H2, origin='lower', extent=(hx[0], hx[-1], ny[0], ny[-1]), aspect='auto', cmap='Blues', vmin=0.50, vmax=0.66)
+    rr = np.array([0, 0.68]); e.plot((rr + 1.151) / 2.785, rr, color=INK, lw=0.8, ls='--')
+    cp = d[(d.FCR > 0.35) & (d.aN <= 0.05)]
+    e.plot(cp.H_ch.median(), 0.025, marker='v', ms=5, color='#C0504D', mec='white', mew=0.5)
+    e.annotate('Charge-rich,\nnearly neutral', (cp.H_ch.median(), 0.04), xytext=(0.20, 0.19), fontsize=5.5, color=INK,
+               arrowprops=dict(arrowstyle='-', color=MUTED, lw=0.5))
+    e.text(0.535, 0.62, 'Folded\nside', fontsize=5.5, color=INK, ha='center', va='top')
+    e.text(0.22, 0.62, 'Disordered side', fontsize=5.5, color=INK, ha='left', va='top')
+    e.set_xlabel('Mean hydropathy'); e.set_ylabel('|NCPR|'); e.set_xlim(0.15, 0.575); e.set_ylim(0, 0.68)
+    cax = e.inset_axes([1.05, 0.0, 0.05, 1.0]); cb = fig.colorbar(im, cax=cax)
     cb.set_label(r'Median $\nu$ (CALVADOS-2)', fontsize=6.5); cb.outline.set_visible(False)
-    panel(c, 'c', r'Median $\nu$ across the diagram of states', x=-0.22, y=1.04)
+    panel(e, 'd', 'Charge-hydropathy plot', x=-0.3, y=1.04)
     fig.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.88)
     check_layout(fig, 'fig2_stages')
     fig.savefig(f'{out}/fig2_stages.pdf'); fig.savefig(f'{out}/fig2_stages.png', dpi=200); plt.close(fig)
