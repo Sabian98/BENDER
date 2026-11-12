@@ -166,13 +166,15 @@ def load(bio_path):
 
 # ---------------------------------------------------------------- Figure 1
 def fig1(d, out):
-    rows = [('FCR', 'FCR'), ('aN', '|NCPR|'), ('NCPR', 'NCPR'), ('SCD', 'SCD'), ('f_aro', 'Aromatic fraction')]
-    fig, axes = plt.subplots(len(rows), 6, figsize=(7.0, 6.0), sharex=True, sharey='row')
+    d = d.assign(KmR=d.f_K - d.f_R)
+    rows = [('FCR', 'FCR'), ('aN', '|NCPR|'), ('NCPR', 'NCPR'), ('SCD', 'SCD'), ('f_aro', 'Aromatic fraction'),
+            ('KmR', 'Lysine minus\nArginine')]
+    fig, axes = plt.subplots(len(rows), 6, figsize=(7.0, 7.0), sharex=True, sharey='row')
     for j, k in enumerate(TAXA):
         g = d[d.kingdom == k]
         for i, (var, lab) in enumerate(rows):
             ax = axes[i, j]; window(ax)
-            if var == 'NCPR':
+            if var in ('NCPR', 'KmR'):
                 ax.axhline(0, color=MUTED, lw=0.5)
             for col, ffn, ls, _ in FF:
                 x, y, e = binned(g, col, var)
@@ -199,8 +201,9 @@ def fig2(d, out):
     fig = plt.figure(figsize=(7.0, 4.9))
     gs = fig.add_gridspec(2, 6, height_ratios=[1, 1.15], hspace=0.62, wspace=1.6)
     gs2 = gs[1, :].subgridspec(1, 3, wspace=0.62)
-    strips = [fig.add_subplot(gs[0, 0:2]), fig.add_subplot(gs[0, 2:4]), fig.add_subplot(gs[0, 4:6])]
-    titles = ['FCR minimum', '|NCPR| begins to rise', 'SCD begins to rise']
+    gs1 = gs[0, :].subgridspec(1, 4, wspace=0.35)
+    strips = [fig.add_subplot(gs1[0, i]) for i in range(4)]
+    titles = ['FCR minimum', '|NCPR| begins to rise', 'SCD begins to rise', 'Lysine overtakes Arginine']
     rows = []
     for k in TAXA:
         g = d[d.kingdom == k]
@@ -211,7 +214,7 @@ def fig2(d, out):
             rows.append(dict(taxon=k, ff=ffn, fcr_min=fmin, fcr_min_value=fval, ncpr_onset=n_m, ncpr_lo=n_lo, ncpr_hi=n_hi,
                              scd_onset=s_m, scd_lo=s_lo, scd_hi=s_hi, lys_over_arg=cross))
     R = pd.DataFrame(rows); R.to_csv(f'{out}/fig2a_stage_markers.csv', index=False)
-    keys = [('fcr_min', None, None), ('ncpr_onset', 'ncpr_lo', 'ncpr_hi'), ('scd_onset', 'scd_lo', 'scd_hi')]
+    keys = [('fcr_min', None, None), ('ncpr_onset', 'ncpr_lo', 'ncpr_hi'), ('scd_onset', 'scd_lo', 'scd_hi'), ('lys_over_arg', None, None)]
     for si, (ax, title, (m, lo, hi)) in enumerate(zip(strips, titles, keys)):
         window(ax)
         for yi, k in enumerate(TAXA):
