@@ -16,7 +16,7 @@ plt.rcParams.update({'font.family': 'Arial', 'mathtext.fontset': 'cm', 'font.siz
                      'savefig.dpi': 300})
 INK, MUTED = '#333333', '#777777'
 CAL, RCH = '#6FA3D2', '#E3A35A'
-REPS = [('compact_A0A540LLY7', 'A0A540LLY7', 'Compact, charge-balanced'),
+REPS = [('compact_A0A540LLY7', 'A0A540LLY7', 'Compact polyampholyte'),
         ('minimum_A0A0C3P091', 'A0A0C3P091', 'FCR minimum'),
         ('basic_Q95UN5', 'Q95UN5', 'Expanded, basic'),
         ('acidic_A0A091CXV9', 'A0A091CXV9', 'Expanded, acidic')]
