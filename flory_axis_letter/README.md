@@ -1,4 +1,4 @@
-# A Shared Flory Axis Orders Charge in Disordered Proteins Across the Tree of Life
+# Taking Charge across the Tree of Life: Universal Flory Scaling of Intrinsically Disordered Proteins
 
 Code for the letter by T. Rahman and V. N. Uversky (manuscript for *The Journal of Physical Chemistry Letters*). The
 letter orders the IDPs of BENDER from six taxa by their Flory exponent ν in CALVADOS-2, Mpipi-Recharged and Mpipi-GG

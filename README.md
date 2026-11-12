@@ -78,8 +78,7 @@ need the experimental SAXS curves, which are not redistributed here. Download th
 
 ## Flory-axis letter
 
-`flory_axis_letter/` holds the code of a second paper built on BENDER, "A Shared Flory Axis Orders Charge in
-Disordered Proteins Across the Tree of Life" (T. Rahman and V. N. Uversky). It runs from `data/` with
+`flory_axis_letter/` holds the code of a second paper built on BENDER, "Taking Charge across the Tree of Life: Universal Flory Scaling of Intrinsically Disordered Proteins" (T. Rahman and V. N. Uversky). It runs from `data/` with
 `bash flory_axis_letter/run_all.sh`; see `flory_axis_letter/README.md`.
 
 ## Recomputing the tables from trajectories
