@@ -166,17 +166,23 @@ def load(bio_path):
 
 # ---------------------------------------------------------------- Figure 1
 def fig1(d, out):
-    d = d.assign(KmR=d.f_K - d.f_R)
     rows = [('FCR', 'FCR'), ('aN', '|NCPR|'), ('NCPR', 'NCPR'), ('SCD', 'SCD'), ('f_aro', 'Aromatic fraction'),
-            ('KmR', 'Lysine minus\nArginine')]
-    fig, axes = plt.subplots(len(rows), 6, figsize=(7.0, 7.0), sharex=True, sharey='row')
+            ('KR', 'Lysine and\nArginine')]
+    LYS, ARG = '#6A51A3', '#B5651D'   # residue colors for the last row, distinct from the force-field colors
+    fig, axes = plt.subplots(len(rows), 6, figsize=(7.0, 7.0), sharex=True)   # y shared by hand below, except the last row
     for j, k in enumerate(TAXA):
         g = d[d.kingdom == k]
         for i, (var, lab) in enumerate(rows):
             ax = axes[i, j]; window(ax)
-            if var in ('NCPR', 'KmR'):
+            if var == 'NCPR':
                 ax.axhline(0, color=MUTED, lw=0.5)
             for col, ffn, ls, _ in FF:
+                if var == 'KR':   # the two fractions cross where Lysine overtakes Arginine
+                    for v, c in (('f_K', LYS), ('f_R', ARG)):
+                        x, y, e = binned(g, col, v)
+                        ax.fill_between(x, y - e, y + e, color=c, alpha=0.15, lw=0)
+                        ax.plot(x, y, ls=ls, color=c, lw=1.2)
+                    continue
                 x, y, e = binned(g, col, var)
                 ax.fill_between(x, y - e, y + e, color=FFC[col], alpha=0.22, lw=0)
                 ax.plot(x, y, ls=ls, color=FFC[col], lw=1.3)
@@ -185,11 +191,21 @@ def fig1(d, out):
             if j == 0:
                 ax.set_ylabel(lab)
             ax.set_xlim(0.40, 0.72); ax.set_xticks([0.45, 0.55, 0.65])
+    for i in range(len(rows)):
+        if rows[i][0] == 'KR':
+            continue   # Lysine and Arginine fractions differ by taxon in scale, so each panel keeps its own range
+        lo = min(a.get_ylim()[0] for a in axes[i]); hi = max(a.get_ylim()[1] for a in axes[i])
+        for j, a in enumerate(axes[i]):
+            a.set_ylim(lo, hi)
+            if j > 0:
+                a.tick_params(labelleft=False)
     handles = [Line2D([], [], color=CAL, lw=1.3, ls='-', label='CALVADOS-2'),
                Line2D([], [], color=RCH, lw=1.3, ls='--', label='Mpipi-Recharged'),
                Patch(color='#EFEFEF', label=r'Common window ($\nu$ 0.49 to 0.60)'),
-               Line2D([], [], color=MUTED, lw=0.6, ls=':', label=r'Good solvent ($\nu$ = 0.588)')]
-    fig.legend(handles=handles, loc='lower center', ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.01))
+               Line2D([], [], color=MUTED, lw=0.6, ls=':', label=r'Good solvent ($\nu$ = 0.588)'),
+               Line2D([], [], color=LYS, lw=1.3, label='Lysine (bottom row)'),
+               Line2D([], [], color=ARG, lw=1.3, label='Arginine (bottom row)')]
+    fig.legend(handles=handles, loc='lower center', ncol=3, frameon=False, bbox_to_anchor=(0.5, -0.01))
     fig.supxlabel(r'Flory exponent $\nu$', y=0.04, fontsize=7.5)
     fig.tight_layout(rect=(0, 0.05, 1, 1), h_pad=0.6, w_pad=0.3)
     check_layout(fig, 'fig1_axis')
