@@ -166,10 +166,8 @@ def load(bio_path):
 
 # ---------------------------------------------------------------- Figure 1
 def fig1(d, out):
-    rows = [('FCR', 'FCR'), ('aN', '|NCPR|'), ('NCPR', 'NCPR'), ('SCD', 'SCD'), ('f_aro', 'Aromatic fraction'),
-            ('KR', 'Lysine and\nArginine')]
-    LYS, ARG = '#6A51A3', '#B5651D'   # residue colors for the last row, distinct from the force-field colors
-    fig, axes = plt.subplots(len(rows), 6, figsize=(7.0, 7.0), sharex=True)   # y shared by hand below, except the last row
+    rows = [('FCR', 'FCR'), ('aN', '|NCPR|'), ('NCPR', 'NCPR'), ('SCD', 'SCD'), ('f_aro', 'Aromatic fraction')]
+    fig, axes = plt.subplots(len(rows), 6, figsize=(7.0, 6.0), sharex=True, sharey='row')
     for j, k in enumerate(TAXA):
         g = d[d.kingdom == k]
         for i, (var, lab) in enumerate(rows):
@@ -177,12 +175,6 @@ def fig1(d, out):
             if var == 'NCPR':
                 ax.axhline(0, color=MUTED, lw=0.5)
             for col, ffn, ls, _ in FF:
-                if var == 'KR':   # the two fractions cross where Lysine overtakes Arginine
-                    for v, c in (('f_K', LYS), ('f_R', ARG)):
-                        x, y, e = binned(g, col, v)
-                        ax.fill_between(x, y - e, y + e, color=c, alpha=0.15, lw=0)
-                        ax.plot(x, y, ls=ls, color=c, lw=1.2)
-                    continue
                 x, y, e = binned(g, col, var)
                 ax.fill_between(x, y - e, y + e, color=FFC[col], alpha=0.22, lw=0)
                 ax.plot(x, y, ls=ls, color=FFC[col], lw=1.3)
@@ -191,21 +183,11 @@ def fig1(d, out):
             if j == 0:
                 ax.set_ylabel(lab)
             ax.set_xlim(0.40, 0.72); ax.set_xticks([0.45, 0.55, 0.65])
-    for i in range(len(rows)):
-        if rows[i][0] == 'KR':
-            continue   # Lysine and Arginine fractions differ by taxon in scale, so each panel keeps its own range
-        lo = min(a.get_ylim()[0] for a in axes[i]); hi = max(a.get_ylim()[1] for a in axes[i])
-        for j, a in enumerate(axes[i]):
-            a.set_ylim(lo, hi)
-            if j > 0:
-                a.tick_params(labelleft=False)
     handles = [Line2D([], [], color=CAL, lw=1.3, ls='-', label='CALVADOS-2'),
                Line2D([], [], color=RCH, lw=1.3, ls='--', label='Mpipi-Recharged'),
                Patch(color='#EFEFEF', label=r'Common window ($\nu$ 0.49 to 0.60)'),
-               Line2D([], [], color=MUTED, lw=0.6, ls=':', label=r'Good solvent ($\nu$ = 0.588)'),
-               Line2D([], [], color=LYS, lw=1.3, label='Lysine (bottom row)'),
-               Line2D([], [], color=ARG, lw=1.3, label='Arginine (bottom row)')]
-    fig.legend(handles=handles, loc='lower center', ncol=3, frameon=False, bbox_to_anchor=(0.5, -0.01))
+               Line2D([], [], color=MUTED, lw=0.6, ls=':', label=r'Good solvent ($\nu$ = 0.588)')]
+    fig.legend(handles=handles, loc='lower center', ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.01))
     fig.supxlabel(r'Flory exponent $\nu$', y=0.04, fontsize=7.5)
     fig.tight_layout(rect=(0, 0.05, 1, 1), h_pad=0.6, w_pad=0.3)
     check_layout(fig, 'fig1_axis')
@@ -217,9 +199,9 @@ def fig2(d, out):
     fig = plt.figure(figsize=(7.0, 4.9))
     gs = fig.add_gridspec(2, 6, height_ratios=[1, 1.15], hspace=0.62, wspace=1.6)
     gs2 = gs[1, :].subgridspec(1, 3, wspace=0.62)
-    gs1 = gs[0, :].subgridspec(1, 4, wspace=0.35)
-    strips = [fig.add_subplot(gs1[0, i]) for i in range(4)]
-    titles = ['FCR minimum', '|NCPR| begins to rise', 'SCD begins to rise', 'Lysine overtakes Arginine']
+    gs1 = gs[0, :].subgridspec(1, 4, wspace=0.55, width_ratios=[1, 1, 1, 1.5])
+    strips = [fig.add_subplot(gs1[0, i]) for i in range(3)]
+    titles = ['FCR minimum', '|NCPR| begins to rise', 'SCD begins to rise']
     rows = []
     for k in TAXA:
         g = d[d.kingdom == k]
@@ -230,7 +212,7 @@ def fig2(d, out):
             rows.append(dict(taxon=k, ff=ffn, fcr_min=fmin, fcr_min_value=fval, ncpr_onset=n_m, ncpr_lo=n_lo, ncpr_hi=n_hi,
                              scd_onset=s_m, scd_lo=s_lo, scd_hi=s_hi, lys_over_arg=cross))
     R = pd.DataFrame(rows); R.to_csv(f'{out}/fig2a_stage_markers.csv', index=False)
-    keys = [('fcr_min', None, None), ('ncpr_onset', 'ncpr_lo', 'ncpr_hi'), ('scd_onset', 'scd_lo', 'scd_hi'), ('lys_over_arg', None, None)]
+    keys = [('fcr_min', None, None), ('ncpr_onset', 'ncpr_lo', 'ncpr_hi'), ('scd_onset', 'scd_lo', 'scd_hi')]
     for si, (ax, title, (m, lo, hi)) in enumerate(zip(strips, titles, keys)):
         window(ax)
         for yi, k in enumerate(TAXA):
@@ -249,6 +231,30 @@ def fig2(d, out):
                         Line2D([], [], marker='s', ls='none', mfc=RCH, mec='white', ms=5, label='Mpipi-Recharged')],
                frameon=False, fontsize=6, loc='upper right', bbox_to_anchor=(0.9, 0.99), ncol=2, handletextpad=0.1)
 
+    # b, the crossover itself: Lysine and Arginine fractions of all IDPs along nu, with each taxon's crossing as a tick
+    LYS, ARG = '#6A51A3', '#B5651D'
+    xo = fig.add_subplot(gs1[0, 3]); window(xo)
+    for fi, (col, ffn, ls, _) in enumerate(FF):
+        curves = {}
+        for v, cc in (('f_K', LYS), ('f_R', ARG)):
+            x, y, e = binned(d, col, v, minn=20)
+            xo.fill_between(x, y - e, y + e, color=cc, alpha=0.15, lw=0); xo.plot(x, y, ls=ls, color=cc, lw=1.3)
+            curves[v] = pd.Series(y, index=x)
+        dk = (curves['f_K'] - curves['f_R']).dropna(); sg = np.sign(dk.values)
+        i = np.where((sg[:-1] < 0) & (sg[1:] >= 0))[0]
+        if len(i):
+            x0, x1 = dk.index[i[0]], dk.index[i[0] + 1]; y0, y1 = dk.values[i[0]], dk.values[i[0] + 1]
+            xc = x0 - y0 * (x1 - x0) / (y1 - y0)
+            yc = np.interp(xc, curves['f_K'].index, curves['f_K'].values)
+            xo.plot(xc, yc, 'o', ms=5.5, mfc='white', mec=INK, mew=0.9, zorder=5)
+        for t in R[R.ff == ffn].lys_over_arg.dropna():
+            xo.plot([t, t], [0.003 + 0.016 * fi, 0.017 + 0.016 * fi], color=FFC[col], lw=1.2, solid_capstyle='butt')
+    xo.set_xlim(0.45, 0.70); xo.set_xticks([0.45, 0.55, 0.65]); xo.set_ylim(0, None); xo.set_xlabel(r'$\nu$')
+    xo.set_ylabel('Fraction of residues')
+    xo.legend(handles=[Line2D([], [], color=LYS, lw=1.3, label='Lysine'), Line2D([], [], color=ARG, lw=1.3, label='Arginine')],
+              frameon=False, fontsize=5.5, loc='upper left', handlelength=1.2)
+    panel(xo, 'b', 'Lysine overtakes Arginine', x=-0.32, y=1.04)
+
     b = fig.add_subplot(gs2[0, 0])
     edges = [(0, 0.05), (0.05, 0.1), (0.1, 0.2), (0.2, 0.35), (0.35, 1.0)]
     labels = ['0 to\n0.05', '0.05 to\n0.1', '0.1 to\n0.2', '0.2 to\n0.35', 'above\n0.35']
@@ -264,7 +270,7 @@ def fig2(d, out):
     b.text(0.02, 0.97, 'Added charge expands chains', transform=b.transAxes, color=MUTED, fontsize=6, va='top')
     b.text(0.02, 0.03, 'Added charge compacts chains', transform=b.transAxes, color=MUTED, fontsize=6, va='bottom')
     b.legend(frameon=False, loc='upper left', bbox_to_anchor=(0.0, 0.9))
-    panel(b, 'b', 'The effect of charge changes sign', x=-0.3, y=1.04)
+    panel(b, 'c', 'The effect of charge changes sign', x=-0.3, y=1.04)
 
     c = fig.add_subplot(gs2[0, 1])
     fx = np.arange(0.0, 0.85, 0.05); ny = np.arange(0.0, 0.70, 0.05)
@@ -279,7 +285,7 @@ def fig2(d, out):
     c.set_xlabel('FCR'); c.set_ylabel('|NCPR|'); c.set_xlim(0, 0.8); c.set_ylim(0, 0.68)
     c.text(0.40, 0.012, 'Polyampholytes', color=INK, fontsize=5.5, ha='center', va='bottom')
     c.text(0.17, 0.50, 'Polyelectrolytes\n(|NCPR| = FCR)', color=INK, fontsize=5.5, ha='center')
-    panel(c, 'c', 'Diagram of states', x=-0.3, y=1.04)
+    panel(c, 'd', 'Diagram of states', x=-0.3, y=1.04)
 
     # d, the charge-hydropathy plane of Uversky et al. 2000, on the same color scale as c
     e = fig.add_subplot(gs2[0, 2])
@@ -303,7 +309,7 @@ def fig2(d, out):
     e.set_xlabel('Mean hydropathy'); e.set_ylabel('|NCPR|'); e.set_xlim(0.15, 0.575); e.set_ylim(0, 0.68)
     cax = e.inset_axes([1.05, 0.0, 0.05, 1.0]); cb = fig.colorbar(im, cax=cax)
     cb.set_label(r'Median $\nu$ (CALVADOS-2)', fontsize=6.5); cb.outline.set_visible(False)
-    panel(e, 'd', 'Charge-hydropathy plot', x=-0.3, y=1.04)
+    panel(e, 'e', 'Charge-hydropathy plot', x=-0.3, y=1.04)
     fig.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.88)
     check_layout(fig, 'fig2_stages')
     fig.savefig(f'{out}/fig2_stages.pdf'); fig.savefig(f'{out}/fig2_stages.png', dpi=200); plt.close(fig)
